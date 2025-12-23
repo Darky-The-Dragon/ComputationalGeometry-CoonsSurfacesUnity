@@ -97,32 +97,3 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
-
-############################################
-# JetBrains IDEs (IntelliJ IDEA / Rider)
-############################################
-.idea/
-*.iws
-*.iml
-*.ipr
-
-# Rider caches
-.idea/.idea*/
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
-
-############################################
-# macOS
-############################################
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Thumbnails and metadata
-._*
-.Spotlight-V100
-.Trashes
-.fseventsd
