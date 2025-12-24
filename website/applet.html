@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>[Titolo Progetto]</title>
+  <title>Applet</title>
   <link href="assets/style.css" rel="stylesheet"/>
 </head>
 <body>
@@ -17,15 +17,15 @@
 
     <div class="topbar-right">
       <nav class="nav">
-        <a class="active" href="index.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="theory.html">Teoria</a>
         <a href="manual.html">Manuale</a>
-        <a class="btn" href="applet.html">Applet</a>
+        <a class="btn active" href="applet.html">Applet</a>
       </nav>
 
       <div class="lang-switch">
-        <a class="active" href="index.html">IT</a> ·
-        <a href="index_en.html">EN</a>
+        <a class="active" href="applet.html">IT</a> ·
+        <a href="applet_en.html">EN</a>
       </div>
 
       <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank">
@@ -38,33 +38,22 @@
 <main class="container">
 
   <section class="card">
-    <h1>[Titolo Progetto]</h1>
+    <h1>Applet</h1>
 
     <ul class="meta">
       <li><strong>Engine:</strong> Unity WebGL</li>
-      <li><strong>Language:</strong> C#, JavaScript</li>
-      <li><strong>Topic:</strong> Computational Geometry</li>
+      <li><strong>Interface language:</strong> English</li>
     </ul>
 
     <p class="muted">
-      Corso: <strong>Computational Geometry</strong><br/>
-      Autore: <strong>[Nome Cognome]</strong> — Matricola: <strong>[XXXXXX]</strong><br/>
-      Università: <strong>University of Milan (UNIMI)</strong>
+      L’interfaccia dell’applet è in inglese.
+      Per i comandi, fare riferimento al <a href="manual.html">Manuale utente</a>.
     </p>
 
-    <p>
-      <strong>Descrizione:</strong><br/>
-      [Breve descrizione del progetto e dell’applet.]
-    </p>
-  </section>
-
-  <section class="card">
-    <h2>Contenuti</h2>
-    <ul class="links">
-      <li><a href="theory.html">Teoria</a> — concetti teorici utilizzati</li>
-      <li><a href="manual.html">Manuale utente</a> — istruzioni d’uso</li>
-      <li><a href="applet.html">Applet</a> — demo interattiva</li>
-    </ul>
+    <div id="unity-container">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div class="muted" id="unity-loading">Loading…</div>
+    </div>
   </section>
 
   <footer class="footer">
@@ -78,6 +67,14 @@
   </footer>
 
 </main>
+
+<script src="assets/unity_embed.js"></script>
+<script>
+  loadUnityWebGL({
+    name: "<nome>",
+    buildUrl: "unity/Build"
+  });
+</script>
 
 </body>
 </html>

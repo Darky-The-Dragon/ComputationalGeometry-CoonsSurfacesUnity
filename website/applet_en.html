@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Applet</title>
+  <link href="assets/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-title">[Project Title]</span>
+      <span class="brand-sub">Computational Geometry — AY 2025/2026</span>
+    </div>
+
+    <div class="topbar-right">
+      <nav class="nav">
+        <a href="index_en.html">Home</a>
+        <a href="theory_en.html">Theory</a>
+        <a href="manual_en.html">User Manual</a>
+        <a class="btn active" href="applet_en.html">Applet</a>
+      </nav>
+
+      <div class="lang-switch">
+        <a href="applet.html">IT</a> ·
+        <a class="active" href="applet_en.html">EN</a>
+      </div>
+
+      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank">
+        GitHub
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="card">
+    <h1>Applet</h1>
+
+    <ul class="meta">
+      <li><strong>Engine:</strong> Unity WebGL</li>
+      <li><strong>Interface language:</strong> English</li>
+    </ul>
+
+    <p class="muted">
+      The applet interface is in English.
+      For usage instructions, please refer to the
+      <a href="manual_en.html">User Manual</a>.
+    </p>
+
+    <div id="unity-container">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div class="muted" id="unity-loading">Loading…</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>
+      © 2025 [Name Surname] — Computational Geometry, University of Milan
+    </p>
+    <div class="footer-links">
+      <a href="https://github.com/USERNAME/REPO" target="_blank">GitHub</a>
+      <a href="license.html">License</a>
+    </div>
+  </footer>
+
+</main>
+
+<script src="assets/unity_embed.js"></script>
+<script>
+  loadUnityWebGL({
+    name: "<nome>",
+    buildUrl: "unity/Build"
+  });
+</script>
+
+</body>
+</html>
