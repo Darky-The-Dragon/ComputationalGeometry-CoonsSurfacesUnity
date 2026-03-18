@@ -11,7 +11,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-title">[Project Title]</span>
+      <span class="brand-title">Surface Approximation using Coons Patches</span>
       <span class="brand-sub">Computational Geometry — AY 2025/2026</span>
     </div>
 
@@ -28,7 +28,7 @@
         <a class="active" href="manual_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank">
+      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
         GitHub
       </a>
     </div>
@@ -46,39 +46,215 @@
     </ul>
 
     <p class="muted">
-      This section describes the controls and usage instructions
-      for the interactive applet.
-    </p>
-
-    <h2>Main controls</h2>
-    <ul>
-      <li><strong>Left click:</strong> add or select a point</li>
-      <li><strong>Drag:</strong> move a selected point</li>
-      <li><strong>Shift + Click:</strong> alternate action (e.g. second endpoint)</li>
-      <li><strong>Delete / Backspace:</strong> remove the selected element</li>
-      <li><strong>R:</strong> reset the scene</li>
-    </ul>
-
-    <h2>Modes</h2>
-    <ul>
-      <li><strong>Points:</strong> creation and manipulation of points</li>
-      <li><strong>Segments:</strong> construction of line segments</li>
-      <li><strong>Rays / reflection:</strong> visualization of reflected rays</li>
-      <li><strong>Transformations:</strong> translation, rotation, scaling</li>
-    </ul>
-
-    <p class="muted">
-      For a live demonstration, visit the
-      <a href="applet_en.html">Applet</a>.
+      This section describes how to use the application and explains
+      all the parameters available for exploring surface approximation
+      using Coons patches.
     </p>
   </article>
 
+  <!-- ========================================= -->
+  <!-- CAMERA -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Scene Controls</h2>
+
+    <ul>
+      <li><strong>Mouse:</strong> camera rotation</li>
+      <li><strong>Scroll:</strong> zoom in/out</li>
+      <li><strong>W A S D:</strong> horizontal movement</li>
+      <li><strong>Q / E:</strong> vertical movement</li>
+      <li><strong>C:</strong> toggle camera mode</li>
+      <li><strong>ESC:</strong> return to UI mode</li>
+    </ul>
+
+    <p>
+      The application distinguishes between UI interaction mode
+      and camera navigation mode, preventing input conflicts.
+    </p>
+
+    <img src="assets/img/camera_controls.png" alt="Camera controls" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- SURFACE -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Reference Surface</h2>
+
+    <p>
+      The reference surface represents the original geometry
+      that the system attempts to approximate.
+      It is defined as a scalar function over a planar domain.
+    </p>
+
+    <h3>Available parameters</h3>
+    <ul>
+      <li><strong>Surface Type:</strong> selects analytic or noise-based surface</li>
+      <li><strong>Height Scale:</strong> controls vertical amplitude</li>
+      <li><strong>Noise Scale:</strong> controls frequency/detail</li>
+      <li><strong>Randomize:</strong> generates a new random configuration</li>
+    </ul>
+
+    <p>
+      More complex surfaces (higher frequency or amplitude)
+      are generally harder to approximate with a limited number of patches.
+    </p>
+
+    <img src="assets/img/surface_examples.png" alt="Surface examples" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- GRID -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Domain Subdivision</h2>
+
+    <p>
+      The domain is subdivided into a rectangular grid.
+      Each cell corresponds to a Coons patch.
+    </p>
+
+    <ul>
+      <li><strong>Grid Resolution X:</strong> number of divisions along X</li>
+      <li><strong>Grid Resolution Z:</strong> number of divisions along Z</li>
+    </ul>
+
+    <p>
+      Increasing the grid resolution:
+    </p>
+    <ul>
+      <li>reduces patch size</li>
+      <li>improves approximation accuracy</li>
+      <li>increases computational cost</li>
+    </ul>
+
+    <img src="assets/img/grid_resolution.png" alt="Grid resolution" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- PATCH -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Coons Patches</h2>
+
+    <p>
+      Each grid cell is approximated using a bilinear Coons patch,
+      constructed from the boundary curves sampled from the reference surface.
+    </p>
+
+    <ul>
+      <li><strong>Patch Resolution:</strong> internal mesh density</li>
+    </ul>
+
+    <p>
+      This parameter affects only the visual smoothness of the rendered surface,
+      not the mathematical definition of the patch.
+    </p>
+
+    <img src="assets/img/patch_resolution.png" alt="Patch resolution" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- ERROR -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Error Analysis</h2>
+
+    <p>
+      The application compares the approximated surface with the reference surface
+      by evaluating the error at sampled points.
+    </p>
+
+    <ul>
+      <li><strong>Mean Error:</strong> average deviation</li>
+      <li><strong>Max Error:</strong> maximum deviation</li>
+      <li><strong>RMSE:</strong> root mean square error</li>
+      <li><strong>Sample Count:</strong> number of evaluated points</li>
+    </ul>
+
+    <p>
+      These metrics provide a quantitative evaluation of the approximation quality.
+    </p>
+
+    <img src="assets/img/error_metrics.png" alt="Error metrics" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- HEATMAP -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Heatmap</h2>
+
+    <p>
+      The approximation error is visualized through a color map applied to the surface.
+    </p>
+
+    <ul>
+      <li><strong>Enable Heatmap:</strong> toggle visualization</li>
+      <li><strong>Max Error Range:</strong> controls color normalization</li>
+    </ul>
+
+    <p>Color encoding:</p>
+
+    <ul>
+      <li>Blue → low error</li>
+      <li>Green → moderate error</li>
+      <li>Yellow → high error</li>
+      <li>Red → very high error</li>
+    </ul>
+
+    <p>
+      Regions with higher curvature tend to exhibit larger approximation errors.
+    </p>
+
+    <img src="assets/img/heatmap.png" alt="Error heatmap" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- OFFSET -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Vertical Offset</h2>
+
+    <p>
+      The approximated surface can be vertically shifted
+      to improve visual comparison with the reference surface.
+    </p>
+
+    <ul>
+      <li><strong>Vertical Offset:</strong> separation between surfaces</li>
+    </ul>
+
+    <p>
+      This parameter does not affect the approximation itself,
+      but improves readability by avoiding overlap.
+    </p>
+
+    <img src="assets/img/offset.png" alt="Vertical offset" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+
+  <section class="card">
+    <p class="muted">
+      For a practical demonstration, open the
+      <a href="applet_en.html">Applet</a>.
+    </p>
+  </section>
+
   <footer class="footer">
     <p>
-      © 2025 [Name Surname] — Computational Geometry, University of Milan
+      © 2026 Zotea Dumitru — Computational Geometry, University of Milan
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank">GitHub</a>
+      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>

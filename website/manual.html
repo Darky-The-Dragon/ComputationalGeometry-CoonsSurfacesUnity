@@ -11,7 +11,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-title">[Titolo Progetto]</span>
+      <span class="brand-title">Approssimazione di Superfici mediante Patch di Coons</span>
       <span class="brand-sub">Computational Geometry — a.a. 2025/2026</span>
     </div>
 
@@ -28,7 +28,7 @@
         <a href="manual_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank">
+      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
         GitHub
       </a>
     </div>
@@ -41,44 +41,222 @@
     <h1>Manuale utente</h1>
 
     <ul class="meta">
-      <li><strong>Target:</strong> End users</li>
+      <li><strong>Target:</strong> Utenti finali</li>
       <li><strong>Applet:</strong> Unity WebGL</li>
     </ul>
 
     <p class="muted">
-      Questa sezione descrive i comandi e le modalità di utilizzo
-      dell’applet interattiva.
+      Questa sezione descrive il funzionamento dell’applet e i parametri
+      disponibili per l’esplorazione dell’approssimazione mediante patch di Coons.
+    </p>
+  </article>
+
+  <!-- ========================================= -->
+  <!-- CAMERA E CONTROLLI -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Controllo della scena</h2>
+
+    <ul>
+      <li><strong>Mouse:</strong> rotazione della camera</li>
+      <li><strong>Scroll:</strong> zoom avanti/indietro</li>
+      <li><strong>W A S D:</strong> movimento nel piano orizzontale</li>
+      <li><strong>Q / E:</strong> movimento verticale</li>
+      <li><strong>C:</strong> attiva/disattiva modalità camera</li>
+      <li><strong>ESC:</strong> ritorna alla modalità UI</li>
+    </ul>
+
+    <p>
+      L’applicazione distingue tra modalità di interazione con l’interfaccia
+      e modalità di esplorazione della scena, evitando interferenze tra input e UI.
     </p>
 
-    <h2>Controlli principali</h2>
+    <!-- IMG PLACEHOLDER -->
+    <img src="assets/img/camera_controls.png" alt="Controlli camera" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- SUPERFICIE -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Superficie di riferimento</h2>
+
+    <p>
+      La superficie di riferimento rappresenta il dato iniziale che si intende approssimare.
+      È definita come funzione scalare sul dominio (x, z).
+    </p>
+
+    <h3>Parametri disponibili</h3>
     <ul>
-      <li><strong>Click sinistro:</strong> aggiunge o seleziona un punto</li>
-      <li><strong>Drag:</strong> sposta un punto selezionato</li>
-      <li><strong>Shift + Click:</strong> azione alternativa (es. secondo estremo)</li>
-      <li><strong>Delete / Backspace:</strong> elimina l’elemento selezionato</li>
-      <li><strong>R:</strong> reset della scena</li>
+      <li><strong>Surface Type:</strong> seleziona il tipo di superficie (analitica o rumore)</li>
+      <li><strong>Height Scale:</strong> controlla l’ampiezza verticale</li>
+      <li><strong>Noise Scale:</strong> controlla la frequenza del rumore</li>
+      <li><strong>Randomize:</strong> genera una nuova configurazione casuale</li>
     </ul>
 
-    <h2>Modalità</h2>
+    <p>
+      Superfici più complesse (alta frequenza o ampiezza elevata) risultano
+      più difficili da approssimare con un numero limitato di patch.
+    </p>
+
+    <img src="assets/img/surface_examples.png" alt="Esempi di superficie" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- GRIGLIA -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Suddivisione del dominio</h2>
+
+    <p>
+      Il dominio viene suddiviso in una griglia rettangolare.
+      Ogni cella della griglia corrisponde a una patch di Coons.
+    </p>
+
     <ul>
-      <li><strong>Punti:</strong> creazione e manipolazione di punti</li>
-      <li><strong>Segmenti:</strong> costruzione di segmenti</li>
-      <li><strong>Raggi / riflessione:</strong> visualizzazione di raggi riflessi</li>
-      <li><strong>Trasformazioni:</strong> traslazioni, rotazioni, scala</li>
+      <li><strong>Grid Resolution X:</strong> numero di divisioni lungo X</li>
+      <li><strong>Grid Resolution Z:</strong> numero di divisioni lungo Z</li>
     </ul>
 
+    <p>
+      Aumentando la risoluzione della griglia:
+    </p>
+    <ul>
+      <li>si riduce la dimensione delle patch</li>
+      <li>si migliora l’accuratezza dell’approssimazione</li>
+      <li>aumenta il costo computazionale</li>
+    </ul>
+
+    <img src="assets/img/grid_resolution.png" alt="Griglia Coons" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- PATCH -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Patch di Coons</h2>
+
+    <p>
+      Ogni cella della griglia è approssimata mediante una patch di Coons bilineare,
+      costruita a partire dalle curve di bordo della superficie di riferimento.
+    </p>
+
+    <ul>
+      <li><strong>Patch Resolution:</strong> densità della mesh interna della patch</li>
+    </ul>
+
+    <p>
+      Questo parametro influenza esclusivamente la qualità visiva della superficie
+      renderizzata, senza modificare la definizione matematica della patch.
+    </p>
+
+    <img src="assets/img/patch_resolution.png" alt="Risoluzione patch" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- ERRORE -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Analisi dell’errore</h2>
+
+    <p>
+      L’applet confronta la superficie approssimata con quella di riferimento
+      calcolando l’errore su un insieme di punti campionati.
+    </p>
+
+    <ul>
+      <li><strong>Mean Error:</strong> errore medio</li>
+      <li><strong>Max Error:</strong> errore massimo</li>
+      <li><strong>RMSE:</strong> errore quadratico medio</li>
+      <li><strong>Sample Count:</strong> numero di punti analizzati</li>
+    </ul>
+
+    <p>
+      Queste metriche permettono di valutare quantitativamente la qualità
+      dell’approssimazione.
+    </p>
+
+    <img src="assets/img/error_metrics.png" alt="Metriche errore" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- HEATMAP -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Heatmap</h2>
+
+    <p>
+      L’errore viene visualizzato tramite una mappa di colori sulla superficie.
+    </p>
+
+    <ul>
+      <li><strong>Enable Heatmap:</strong> attiva/disattiva la visualizzazione</li>
+      <li><strong>Max Error Range:</strong> scala di normalizzazione dei colori</li>
+    </ul>
+
+    <p>
+      Codifica cromatica:
+    </p>
+
+    <ul>
+      <li>Blu → errore basso</li>
+      <li>Verde → errore moderato</li>
+      <li>Giallo → errore elevato</li>
+      <li>Rosso → errore molto elevato</li>
+    </ul>
+
+    <p>
+      Le regioni con maggiore curvatura tendono a mostrare errori più elevati.
+    </p>
+
+    <img src="assets/img/heatmap.png" alt="Heatmap errore" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- OFFSET -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Offset verticale</h2>
+
+    <p>
+      La superficie approssimata può essere traslata verticalmente
+      per facilitarne la visualizzazione.
+    </p>
+
+    <ul>
+      <li><strong>Vertical Offset:</strong> separazione tra superficie reale e approssimata</li>
+    </ul>
+
+    <p>
+      Questo parametro non influisce sull’errore, ma migliora la leggibilità
+      evitando sovrapposizioni visive.
+    </p>
+
+    <img src="assets/img/offset.png" alt="Offset verticale" class="manual-img"/>
+  </section>
+
+  <!-- ========================================= -->
+
+  <section class="card">
     <p class="muted">
       Per una dimostrazione pratica, visita l’
       <a href="applet.html">Applet</a>.
     </p>
-  </article>
+  </section>
 
   <footer class="footer">
     <p>
-      © 2025 [Nome Cognome] — Computational Geometry, University of Milan
+      © 2026 Zotea Dumitru — Computational Geometry, University of Milan
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank">GitHub</a>
+      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>
