@@ -5,6 +5,19 @@
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>Theory</title>
   <link href="assets/style.css" rel="stylesheet"/>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
 
@@ -28,7 +41,7 @@
         <a class="active" href="theory_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank">
+      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
         GitHub
       </a>
     </div>
@@ -41,17 +54,490 @@
     <h1>Theory</h1>
 
     <p class="muted">
-      For an interactive demonstration of these concepts, open the
-      <a href="applet_en.html">Applet</a>.
+      For an interactive demonstration of the concepts discussed here,
+      see the <a href="applet_en.html">Applet</a>.
     </p>
+
+    <section>
+      <h2>1. Problem setting</h2>
+      <p>
+        Consider a surface represented as the graph of a scalar function defined over a rectangular planar domain.
+        More precisely, let
+      </p>
+      <p>
+        \[
+        f : D \subset \mathbb{R}^2 \to \mathbb{R}
+        \]
+      </p>
+      <p>
+        be a sufficiently regular function, where \(D\) is a rectangle in the \(xz\)-plane.
+        The reference surface is then the subset of \(\mathbb{R}^3\) given by
+      </p>
+      <p>
+        \[
+        \Sigma = \{(x, f(x,z), z) \mid (x,z) \in D\}.
+        \]
+      </p>
+      <p>
+        In the application, this surface is taken as the initial datum and may be generated either by means of a regular analytic function,
+        or by Perlin-noise-based functions, possibly combined across multiple scales.
+        In both cases, the reference surface constitutes the continuous model to be approximated.
+      </p>
+      <p>
+        The problem under study consists in constructing an approximating surface \(\widehat{\Sigma}\), defined piecewise,
+        obtained by subdividing the domain into a rectangular grid and assigning to each cell a bilinear Coons patch.
+        The theoretical interest of this construction lies in relating three distinct but closely connected aspects:
+        the local structure of the boundary data, the global quality of the approximation, and the continuity of the resulting surface.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Domain discretization</h2>
+      <p>
+        Let the rectangular domain be
+      </p>
+      <p>
+        \[
+        D = [a,b] \times [c,d].
+        \]
+      </p>
+      <p>
+        It is subdivided into a uniform grid by introducing \(N_x\) subdivisions along the \(x\)-direction
+        and \(N_z\) subdivisions along the \(z\)-direction. The grid nodes are therefore
+      </p>
+      <p>
+        \[
+        x_i = a + i\,\Delta x, \qquad i = 0,\dots,N_x,
+        \]
+      </p>
+      <p>
+        \[
+        z_j = c + j\,\Delta z, \qquad j = 0,\dots,N_z,
+        \]
+      </p>
+      <p>
+        where
+      </p>
+      <p>
+        \[
+        \Delta x = \frac{b-a}{N_x}, \qquad \Delta z = \frac{d-c}{N_z}.
+        \]
+      </p>
+      <p>
+        Each pair of consecutive intervals defines a rectangular cell
+      </p>
+      <p>
+        \[
+        D_{ij} = [x_i,x_{i+1}] \times [z_j,z_{j+1}],
+        \]
+      </p>
+      <p>
+        with \(i = 0,\dots,N_x-1\) and \(j = 0,\dots,N_z-1\).
+      </p>
+      <p>
+        The discretization of the domain makes it possible to replace a global problem, defined over the whole rectangle \(D\),
+        with a family of local problems, each defined on a single cell.
+        The overall approximation is therefore obtained by assembling the local solutions.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Local parametrization of a cell</h2>
+      <p>
+        For each cell \(D_{ij}\), an affine parametrization onto the unit square \([0,1]^2\) is introduced.
+        If \((x,z) \in D_{ij}\), the local parameters \(u,v \in [0,1]\) are defined by
+      </p>
+      <p>
+        \[
+        u = \frac{x-x_i}{x_{i+1}-x_i}, \qquad
+        v = \frac{z-z_j}{z_{j+1}-z_j}.
+        \]
+      </p>
+      <p>
+        In this way, every cell is mapped to the same standard parametric domain,
+        and the construction of the patch can be expressed in a uniform form, independently of the position of the cell in the global domain.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Boundary data</h2>
+      <p>
+        In order to construct a Coons patch on a cell \(D_{ij}\), one considers the four boundary curves
+        obtained by restricting the reference surface to the edges of the rectangle. These are the parametrized curves
+      </p>
+      <p>
+        \[
+        C_0(u) = \bigl(x(u),\, f(x(u),z_j),\, z_j\bigr),
+        \]
+      </p>
+      <p>
+        \[
+        C_1(u) = \bigl(x(u),\, f(x(u),z_{j+1}),\, z_{j+1}\bigr),
+        \]
+      </p>
+      <p>
+        \[
+        D_0(v) = \bigl(x_i,\, f(x_i,z(v)),\, z(v)\bigr),
+        \]
+      </p>
+      <p>
+        \[
+        D_1(v) = \bigl(x_{i+1},\, f(x_{i+1},z(v)),\, z(v)\bigr),
+        \]
+      </p>
+      <p>
+        where
+      </p>
+      <p>
+        \[
+        x(u) = (1-u)x_i + ux_{i+1}, \qquad
+        z(v) = (1-v)z_j + vz_{j+1}.
+        \]
+      </p>
+      <p>
+        These four curves constitute the interpolation data for the patch.
+        By construction, they coincide at the vertices of the cell.
+        Indeed, if one denotes
+      </p>
+      <p>
+        \[
+        P_{00} = (x_i, f(x_i,z_j), z_j), \qquad
+        P_{10} = (x_{i+1}, f(x_{i+1},z_j), z_j),
+        \]
+      </p>
+      <p>
+        \[
+        P_{01} = (x_i, f(x_i,z_{j+1}), z_{j+1}), \qquad
+        P_{11} = (x_{i+1}, f(x_{i+1},z_{j+1}), z_{j+1}),
+        \]
+      </p>
+      <p>
+        one has the compatibility conditions
+      </p>
+      <p>
+        \[
+        C_0(0)=D_0(0)=P_{00}, \qquad C_0(1)=D_1(0)=P_{10},
+        \]
+      </p>
+      <p>
+        \[
+        C_1(0)=D_0(1)=P_{01}, \qquad C_1(1)=D_1(1)=P_{11}.
+        \]
+      </p>
+      <p>
+        This condition is necessary for the interpolating surface to be well defined.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Definition of the bilinear Coons patch</h2>
+      <p>
+        Given four compatible boundary curves, the bilinear Coons patch is the parametric surface
+      </p>
+      <p>
+        \[
+        P : [0,1]^2 \to \mathbb{R}^3
+        \]
+      </p>
+      <p>
+        defined by
+      </p>
+      <p>
+        \[
+        P(u,v) = (1-v)C_0(u) + vC_1(u) + (1-u)D_0(v) + uD_1(v) - B(u,v),
+        \]
+      </p>
+      <p>
+        where \(B(u,v)\) is the bilinear correction term.
+      </p>
+      <p>
+        This formula can be interpreted as the sum of two linear interpolations:
+        one obtained by interpolating the horizontal boundary curves along the \(v\)-direction,
+        the other obtained by interpolating the vertical boundary curves along the \(u\)-direction.
+        Since this sum counts the corner contributions twice, an appropriate correction term must be subtracted.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Bilinear correction term</h2>
+      <p>
+        The correction term is the bilinear surface built from the four vertices of the cell:
+      </p>
+      <p>
+        \[
+        B(u,v) =
+        (1-u)(1-v)P_{00}
+        + u(1-v)P_{10}
+        + (1-u)vP_{01}
+        + uvP_{11}.
+        \]
+      </p>
+      <p>
+        From an algebraic point of view, \(B(u,v)\) is the bilinear interpolation of the corner points.
+        From a geometric point of view, it represents the common contribution of the two previous linear interpolations,
+        which must be subtracted in order to avoid duplication.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Interpolation properties</h2>
+      <p>
+        The fundamental property of the Coons patch is the exact interpolation of the assigned boundaries.
+        Indeed, by substituting \(v=0\) or \(v=1\), one obtains
+      </p>
+      <p>
+        \[
+        P(u,0)=C_0(u), \qquad P(u,1)=C_1(u),
+        \]
+      </p>
+      <p>
+        while by setting \(u=0\) or \(u=1\), one gets
+      </p>
+      <p>
+        \[
+        P(0,v)=D_0(v), \qquad P(1,v)=D_1(v).
+        \]
+      </p>
+      <p>
+        It follows that the patch reconstructs exactly the four boundary curves from which it is defined.
+        This property is the reason why Coons patches constitute a natural tool in geometric modeling:
+        they allow the interior of a surface to be determined from the sole information available on its boundary.
+      </p>
+      <p>
+        However, this exactness only concerns the boundary.
+        In general, nothing guarantees that the interior of the patch coincides with the restriction of the original surface to the same cell.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Construction of the global approximating surface</h2>
+      <p>
+        The overall approximation of the reference surface is obtained by associating to each cell \(D_{ij}\)
+        the corresponding Coons patch \(P_{ij}(u,v)\).
+        One then defines a piecewise surface \(\widehat{\Sigma}\) whose local expression on each cell is
+      </p>
+      <p>
+        \[
+        \widehat{\Sigma}_{ij}(x,z) = P_{ij}(u(x),v(z)).
+        \]
+      </p>
+      <p>
+        Symbolically, the approximating surface may be written as
+      </p>
+      <p>
+        \[
+        \widehat{\Sigma} = \bigcup_{i,j} \widehat{\Sigma}_{ij}.
+        \]
+      </p>
+      <p>
+        The construction is therefore piecewise: each patch depends only on its own cell and on the corresponding boundary data,
+        while the union of all patches yields a surface defined over the whole domain.
+      </p>
+    </section>
+
+    <section>
+      <h2>9. Continuity of the constructed surface</h2>
+      <p>
+        Since two adjacent patches share the same geometric boundary, the resulting surface is continuous in position.
+        In analytic terms, it is at least \(C^0\). Therefore, no jumps in height or spatial discontinuities arise between one cell and the next.
+      </p>
+      <p>
+        Continuity of first derivatives, on the other hand, is not guaranteed in general.
+        The partial derivatives along shared edges may depend on the internal structure of the two neighboring patches and may fail to coincide.
+        The global surface is therefore not, in general, \(C^1\).
+      </p>
+      <p>
+        This is a theoretically relevant point.
+        Coons patches provide exact boundary reconstruction and basic geometric continuity,
+        but they do not automatically yield a smooth surface in the differential sense.
+      </p>
+    </section>
+
+    <section>
+      <h2>10. Boundary interpolation and interior approximation</h2>
+      <p>
+        The distinction between interpolation and approximation is central to the interpretation of the method.
+        On the boundary of each cell, the Coons patch reproduces the reference surface exactly,
+        since its edges are sampled directly from it.
+        Inside the cell, by contrast, reconstruction is carried out solely through blending of the boundary data.
+      </p>
+      <p>
+        It follows that, except in special cases, the interior of the patch does not coincide exactly with the restriction of the original surface.
+        The method uses only a limited amount of information: it knows the behavior of the surface along the edges,
+        but it has no independent information about the interior.
+      </p>
+    </section>
+
+    <section>
+      <h2>11. Cases of exact reconstruction</h2>
+      <p>
+        There are situations in which reconstruction by means of Coons patches is exact.
+        In particular, if the reference surface, restricted to a given cell, is compatible with the bilinear form determined by its boundaries,
+        then the patch coincides with it at every point of the cell.
+      </p>
+      <p>
+        More generally, if the graph of the function is locally affine,
+        or if the interior dependence is completely determined by the boundary data according to the bilinear model,
+        then no approximation error appears.
+        In nonlinear cases, by contrast, the difference between the actual surface and the reconstructed one
+        tends to increase with the local curvature and complexity.
+      </p>
+    </section>
+
+    <section>
+      <h2>12. Pointwise approximation error</h2>
+      <p>
+        Denoting by \(f(x,z)\) the height of the reference surface and by \(\widehat{f}(x,z)\) the height of the approximated surface,
+        the pointwise error is defined as
+      </p>
+      <p>
+        \[
+        e(x,z) = \lvert f(x,z) - \widehat{f}(x,z) \rvert.
+        \]
+      </p>
+      <p>
+        This quantity measures the vertical discrepancy between the original surface and the reconstructed one.
+        This is a natural choice in the case of surfaces represented as graphs of functions,
+        since both surfaces are compared over the same point of the planar domain.
+      </p>
+    </section>
+
+    <section>
+      <h2>13. Global error measures</h2>
+      <p>
+        In order to obtain a synthetic evaluation of the approximation quality,
+        the error is sampled over a finite set of points in the domain and summarized through several global quantities.
+      </p>
+      <p>
+        The mean error is defined by
+      </p>
+      <p>
+        \[
+        E_{\mathrm{mean}} = \frac{1}{N}\sum_{k=1}^{N} e_k,
+        \]
+      </p>
+      <p>
+        where \(e_k\) is the error at the \(k\)-th sampled point and \(N\) is the total number of samples.
+      </p>
+      <p>
+        The maximum error is given by
+      </p>
+      <p>
+        \[
+        E_{\mathrm{max}} = \max_{1 \le k \le N} e_k,
+        \]
+      </p>
+      <p>
+        and measures the worst observed discrepancy.
+      </p>
+      <p>
+        The root mean square error, or RMSE, is defined by
+      </p>
+      <p>
+        \[
+        E_{\mathrm{RMSE}} =
+        \sqrt{
+        \frac{1}{N}\sum_{k=1}^{N} e_k^2
+        }.
+        \]
+      </p>
+      <p>
+        Unlike the mean absolute error, the RMSE assigns greater weight to large errors,
+        and is therefore particularly useful when one wishes to emphasize regions where the approximation fails more markedly.
+      </p>
+    </section>
+
+    <section>
+      <h2>14. Dependence of the error on discretization</h2>
+      <p>
+        One of the most significant aspects of the problem concerns the dependence of the error on the fineness of the grid.
+        If the numbers of subdivisions \(N_x\) and \(N_z\) increase, the cells become smaller,
+        and each Coons patch operates on a reduced portion of the surface.
+        Under these conditions, interior reconstruction generally tends to become more accurate.
+      </p>
+      <p>
+        From an intuitive point of view, a sufficiently regular surface, when observed at progressively smaller scales,
+        appears increasingly simple.
+        Consequently, a local reconstruction based solely on boundary data tends to improve as the discretization is refined.
+      </p>
+    </section>
+
+    <section>
+      <h2>15. Complexity of the reference surface</h2>
+      <p>
+        The difficulty of the problem also depends on the nature of the reference surface.
+        Regular, low-spatial-frequency surfaces, with smooth variations and an almost sinusoidal behavior,
+        are generally easier to approximate with a limited number of patches.
+        By contrast, noise-generated surfaces, especially when combining multiple detail scales,
+        exhibit stronger local variations and make the approximation significantly harder.
+      </p>
+    </section>
+
+    <section>
+      <h2>16. Internal sampling of the patch and mesh representation</h2>
+      <p>
+        From a mathematical point of view, the Coons patch is a continuous parametric surface over the unit square.
+        In order to be rendered visually, it must be sampled on an internal grid of parameter values \((u,v)\)
+        and converted into a triangular mesh.
+      </p>
+      <p>
+        The so-called internal patch resolution does not change the definition of the surface,
+        but only the way in which it is discretized for visualization purposes.
+        A higher resolution produces a smoother and more detailed graphical representation;
+        a lower resolution makes the triangular structure of the mesh more evident.
+      </p>
+    </section>
+
+    <section>
+      <h2>17. Interpretation of the error map</h2>
+      <p>
+        The application associates a color encoding with the pointwise error, thus producing a heatmap defined over the domain of the approximated surface.
+        This representation introduces no new mathematical content, but serves an important analytical purpose:
+        it makes the spatial distribution of the error immediately visible.
+      </p>
+      <p>
+        Nearly planar regions or regions of low curvature tend to be approximated better and therefore correspond to lower error values;
+        conversely, areas with strong slope variations, ridges, valleys, or noisy detail show higher values.
+      </p>
+    </section>
+
+    <section>
+      <h2>18. Overall theoretical meaning</h2>
+      <p>
+        Taken as a whole, the problem under study constitutes an elementary but significant example of local geometric approximation.
+        Coons patches make it possible to reconstruct a surface from boundary information,
+        and for this very reason they clearly reveal both the limitations and the strengths of a local interpolation approach.
+      </p>
+      <p>
+        On the one hand, the method guarantees a simple construction, geometrically coherent and continuous in position;
+        on the other hand, it does not in general ensure either exactness in the interior or continuity of first derivatives between adjacent patches.
+        The resulting surface is therefore a good piecewise approximation, but not a smooth surface in the strong sense of the term.
+      </p>
+    </section>
+
+    <section>
+      <h2>19. Conclusion</h2>
+      <p>
+        The construction by means of bilinear Coons patches provides a natural procedure for approximating a surface defined over a rectangular domain.
+        The method is based on subdividing the domain into cells, extracting boundary curves from each cell,
+        and reconstructing the interior through parametric blending.
+        The global surface is obtained as the union of local patches, continuous in position but not necessarily in derivatives.
+      </p>
+      <p>
+        Approximation error arises from the fact that the interior of each patch is determined solely by its boundaries
+        and not by a complete knowledge of the original surface.
+        Refining the grid tends to reduce this error, whereas increasing the complexity of the surface tends to amplify it.
+        Numerical and visual error analysis therefore make it possible to study rigorously both the effectiveness of the method and its limitations.
+      </p>
+    </section>
   </article>
 
   <footer class="footer">
     <p>
-      © 2025 [Name Surname] — Computational Geometry, University of Milan
+      © 2026 Zotea Dumitru — Computational Geometry, University of Milan
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank">GitHub</a>
+      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>
