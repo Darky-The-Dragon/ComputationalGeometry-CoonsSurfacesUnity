@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>[Project Title]</title>
+  <title>Surface Approximation using Coons Patches</title>
   <link href="assets/style.css" rel="stylesheet"/>
 </head>
 <body>
@@ -11,7 +11,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-title">[Project Title]</span>
+      <span class="brand-title">Surface Approximation using Coons Patches</span>
       <span class="brand-sub">Computational Geometry — AY 2025/2026</span>
     </div>
 
@@ -28,7 +28,7 @@
         <a class="active" href="index_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank">
+      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
         GitHub
       </a>
     </div>
@@ -38,41 +38,74 @@
 <main class="container">
 
   <section class="card">
-    <h1>[Project Title]</h1>
+    <h1>Surface Approximation using Coons Patches</h1>
 
     <ul class="meta">
       <li><strong>Engine:</strong> Unity WebGL</li>
-      <li><strong>Language:</strong> C#, JavaScript</li>
+      <li><strong>Languages:</strong> C#, JavaScript</li>
       <li><strong>Topic:</strong> Computational Geometry</li>
     </ul>
 
     <p class="muted">
       Course: <strong>Computational Geometry</strong><br/>
-      Author: <strong>[Name Surname]</strong> — Student ID: <strong>[XXXXXX]</strong><br/>
-      University: <strong>University of Milan</strong>
+      Author: <strong>Zotea Dumitru</strong> — Student ID: <strong>40654A</strong><br/>
+      University: <strong>University of Milan (UNIMI)</strong>
     </p>
 
     <p>
       <strong>Description:</strong><br/>
-      [Short description of the project and the applet.]
+      This project presents an interactive applet designed to study
+      the approximation of surfaces through a rectangular grid of bilinear Coons patches.
+      Starting from a reference surface defined over a planar domain,
+      the system constructs a piecewise approximated surface
+      by interpolating the boundary curves of each cell
+      and reconstructing the interior through the classical Coons formulation.
     </p>
+
+    <p>
+      The purpose of the application is not limited to visualizing a surface,
+      but rather to analyze how the quality of the approximation changes
+      with respect to domain discretization and surface complexity.
+      The user can compare in real time the reference surface
+      with its Coons-based approximation, evaluate numerical error metrics
+      such as mean error, maximum error, and RMSE,
+      and observe their spatial distribution through a heatmap.
+    </p>
+
+    <p>
+      The applet therefore serves as a didactic tool for exploring
+      fundamental concepts in computational geometry and geometric modeling:
+      boundary interpolation, piecewise parametric surface construction,
+      continuity between adjacent patches, dependence of approximation error on discretization,
+      and the distinction between exact boundary interpolation and approximate interior reconstruction.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Project Goals</h2>
+    <ul class="links">
+      <li>study the construction of surfaces using bilinear Coons patches;</li>
+      <li>analyze the effect of domain subdivision on approximation quality;</li>
+      <li>compare smooth analytic surfaces with noise-based surfaces;</li>
+      <li>visualize and quantify approximation error in an interactive way.</li>
+    </ul>
   </section>
 
   <section class="card">
     <h2>Contents</h2>
     <ul class="links">
-      <li><a href="theory_en.html">Theory</a> — theoretical background</li>
+      <li><a href="theory_en.html">Theory</a> — mathematical and geometric foundations</li>
       <li><a href="manual_en.html">User Manual</a> — usage instructions</li>
-      <li><a href="applet_en.html">Applet</a> — interactive demo</li>
+      <li><a href="applet_en.html">Applet</a> — interactive demonstration</li>
     </ul>
   </section>
 
   <footer class="footer">
     <p>
-      © 2025 [Name Surname] — Computational Geometry, University of Milan
+      © 2026 Zotea Dumitru — Computational Geometry, University of Milan
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank">GitHub</a>
+      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>

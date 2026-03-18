@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>[Titolo Progetto]</title>
+  <title>Approssimazione di Superfici mediante Patch di Coons</title>
   <link href="assets/style.css" rel="stylesheet"/>
 </head>
 <body>
@@ -11,7 +11,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-title">[Titolo Progetto]</span>
+      <span class="brand-title">Approssimazione di Superfici mediante Patch di Coons</span>
       <span class="brand-sub">Computational Geometry — a.a. 2025/2026</span>
     </div>
 
@@ -28,7 +28,7 @@
         <a href="index_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank">
+      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
         GitHub
       </a>
     </div>
@@ -38,41 +38,75 @@
 <main class="container">
 
   <section class="card">
-    <h1>[Titolo Progetto]</h1>
+    <h1>Approssimazione di Superfici mediante Patch di Coons</h1>
 
     <ul class="meta">
       <li><strong>Engine:</strong> Unity WebGL</li>
-      <li><strong>Language:</strong> C#, JavaScript</li>
-      <li><strong>Topic:</strong> Computational Geometry</li>
+      <li><strong>Linguaggi:</strong> C#, JavaScript</li>
+      <li><strong>Argomento:</strong> Computational Geometry</li>
     </ul>
 
     <p class="muted">
       Corso: <strong>Computational Geometry</strong><br/>
-      Autore: <strong>[Nome Cognome]</strong> — Matricola: <strong>[XXXXXX]</strong><br/>
+      Autore: <strong>Zotea Dumitru</strong> — Matricola: <strong>40654A</strong><br/>
       Università: <strong>University of Milan (UNIMI)</strong>
     </p>
 
     <p>
       <strong>Descrizione:</strong><br/>
-      [Breve descrizione del progetto e dell’applet.]
+      Questo progetto presenta un’applet interattiva dedicata allo studio
+      dell’approssimazione di superfici mediante una decomposizione del dominio
+      in una griglia rettangolare di patch di Coons bilineari.
+      A partire da una superficie di riferimento definita su un dominio nel piano,
+      il sistema costruisce una superficie approssimata a tratti,
+      ottenuta interpolando esattamente i bordi di ciascuna cella
+      e ricostruendone l’interno tramite la formulazione classica delle patch di Coons.
     </p>
+
+    <p>
+      L’obiettivo dell’applicazione non è soltanto visualizzare una superficie,
+      ma mettere in evidenza il comportamento dell’approssimazione al variare
+      della discretizzazione del dominio e della complessità geometrica della superficie iniziale.
+      L’utente può confrontare in tempo reale la superficie di riferimento
+      con la superficie approssimata, osservare l’errore numerico tramite misure globali
+      come errore medio, errore massimo e RMSE,
+      e analizzarne la distribuzione spaziale mediante una heatmap.
+    </p>
+
+    <p>
+      L’applet costituisce quindi uno strumento didattico per esplorare
+      alcuni concetti fondamentali della geometria computazionale e della modellazione geometrica:
+      interpolazione di dati di bordo, costruzione di superfici parametriche a tratti,
+      continuità tra patch adiacenti, dipendenza dell’errore dalla discretizzazione
+      e differenza tra interpolazione esatta sul bordo e approssimazione nell’interno.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Obiettivi del progetto</h2>
+    <ul class="links">
+      <li>studiare la costruzione di superfici mediante patch di Coons bilineari;</li>
+      <li>analizzare l’effetto della suddivisione del dominio sulla qualità dell’approssimazione;</li>
+      <li>confrontare superfici di riferimento regolari e superfici generate tramite rumore;</li>
+      <li>visualizzare e quantificare l’errore di approssimazione in modo interattivo.</li>
+    </ul>
   </section>
 
   <section class="card">
     <h2>Contenuti</h2>
     <ul class="links">
-      <li><a href="theory.html">Teoria</a> — concetti teorici utilizzati</li>
-      <li><a href="manual.html">Manuale utente</a> — istruzioni d’uso</li>
-      <li><a href="applet.html">Applet</a> — demo interattiva</li>
+      <li><a href="theory.html">Teoria</a> — fondamenti matematici e geometrici del progetto</li>
+      <li><a href="manual.html">Manuale utente</a> — istruzioni per l’utilizzo dell’applet</li>
+      <li><a href="applet.html">Applet</a> — demo interattiva dell’approssimazione mediante patch di Coons</li>
     </ul>
   </section>
 
   <footer class="footer">
     <p>
-      © 2025 [Nome Cognome] — Computational Geometry, University of Milan
+      © 2026 Zotea Dumitru — Computational Geometry, University of Milan
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank">GitHub</a>
+      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>
