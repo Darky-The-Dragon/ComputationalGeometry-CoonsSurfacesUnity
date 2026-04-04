@@ -1,23 +1,29 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class AppUIController : MonoBehaviour
 {
-    [Header("Scene References")]
-    public ReferenceSurfaceGenerator referenceSurface;
+    private const string StatusEditingSurface = "Status: Editing reference surface";
+    private const string StatusApproximationReady = "Status: Approximation ready";
+    private const string StatusRecomputeRequired = "Status: Surface changed, recomputation required";
+
+    [Header("Scene References")] public ReferenceSurfaceGenerator referenceSurface;
+
     public CoonsGridGenerator coonsGrid;
     public SurfaceApproximationAnalyzer analyzer;
 
-    [Header("UI - Surface")]
-    public TMP_Dropdown surfaceModeDropdown;
+    [Header("UI - Status")] public TMP_Text statusText;
+
+    [Header("UI - Surface")] public TMP_Dropdown surfaceModeDropdown;
+
     public Slider heightScaleSlider;
     public TMP_Text heightScaleValueText;
     public Slider noiseScaleSlider;
     public TMP_Text noiseScaleValueText;
 
-    [Header("UI - Grid")]
-    public Slider gridXSlider;
+    [Header("UI - Grid")] public Slider gridXSlider;
+
     public TMP_Text gridXValueText;
     public Slider gridZSlider;
     public TMP_Text gridZValueText;
@@ -26,51 +32,73 @@ public class AppUIController : MonoBehaviour
     public Slider verticalOffsetSlider;
     public TMP_Text verticalOffsetValueText;
 
-    [Header("UI - Heatmap")]
-    public Toggle heatmapToggle;
+    [Header("UI - Display")] public Toggle showReferenceToggle;
+
+    public Toggle showCoonsGridToggle;
+
+    [Header("UI - Heatmap")] public Toggle heatmapToggle;
+
     public Slider heatmapMaxErrorSlider;
     public TMP_Text heatmapMaxErrorValueText;
 
-    [Header("UI - Buttons")]
-    public Button randomizeNoiseButton;
+    [Header("UI - Buttons")] public Button randomizeNoiseButton;
 
-    [Header("UI - Metrics")]
-    public TMP_Text metricsText;
+    public Button generateApproximationButton;
+    public TMP_Text generateApproximationButtonText;
+
+    [Header("UI - Metrics")] public TMP_Text metricsText;
+
+    private bool approximationDirty;
+
+    private bool hasGeneratedApproximation;
+    private bool suppressCallbacks;
 
     private void Start()
     {
         SetupUIFromScene();
         BindEvents();
+        ApplyInitialWorkflowState();
         RefreshAll();
     }
 
     private void OnEnable()
     {
         if (referenceSurface != null)
-            referenceSurface.OnSurfaceRegenerated += HandleSceneUpdated;
+            referenceSurface.OnSurfaceRegenerated += HandleReferenceSurfaceUpdated;
 
         if (coonsGrid != null)
-            coonsGrid.OnGridRegenerated += HandleSceneUpdated;
+            coonsGrid.OnGridRegenerated += HandleGridUpdated;
     }
 
     private void OnDisable()
     {
         if (referenceSurface != null)
-            referenceSurface.OnSurfaceRegenerated -= HandleSceneUpdated;
+            referenceSurface.OnSurfaceRegenerated -= HandleReferenceSurfaceUpdated;
 
         if (coonsGrid != null)
-            coonsGrid.OnGridRegenerated -= HandleSceneUpdated;
+            coonsGrid.OnGridRegenerated -= HandleGridUpdated;
     }
 
-    private void HandleSceneUpdated()
+    private void HandleReferenceSurfaceUpdated()
     {
-        RefreshMetricsText();
+        RefreshValueTexts();
+
+        if (hasGeneratedApproximation && !approximationDirty)
+            RefreshMetricsText();
+    }
+
+    private void HandleGridUpdated()
+    {
+        if (hasGeneratedApproximation)
+            RefreshMetricsText();
     }
 
     private void SetupUIFromScene()
     {
         if (referenceSurface == null || coonsGrid == null)
             return;
+
+        suppressCallbacks = true;
 
         if (surfaceModeDropdown != null)
             surfaceModeDropdown.value = (int)referenceSurface.surfaceMode;
@@ -99,6 +127,14 @@ public class AppUIController : MonoBehaviour
         if (heatmapMaxErrorSlider != null)
             heatmapMaxErrorSlider.value = coonsGrid.heatmapMaxError;
 
+        if (showReferenceToggle != null)
+            showReferenceToggle.isOn = true;
+
+        if (showCoonsGridToggle != null)
+            showCoonsGridToggle.isOn = false;
+
+        suppressCallbacks = false;
+
         RefreshValueTexts();
     }
 
@@ -125,6 +161,12 @@ public class AppUIController : MonoBehaviour
         if (verticalOffsetSlider != null)
             verticalOffsetSlider.onValueChanged.AddListener(OnVerticalOffsetChanged);
 
+        if (showReferenceToggle != null)
+            showReferenceToggle.onValueChanged.AddListener(OnShowReferenceChanged);
+
+        if (showCoonsGridToggle != null)
+            showCoonsGridToggle.onValueChanged.AddListener(OnShowCoonsGridChanged);
+
         if (heatmapToggle != null)
             heatmapToggle.onValueChanged.AddListener(OnHeatmapToggleChanged);
 
@@ -133,12 +175,39 @@ public class AppUIController : MonoBehaviour
 
         if (randomizeNoiseButton != null)
             randomizeNoiseButton.onClick.AddListener(OnRandomizeNoiseClicked);
+
+        if (generateApproximationButton != null)
+            generateApproximationButton.onClick.AddListener(OnGenerateApproximationClicked);
     }
 
     private void RefreshAll()
     {
         RefreshValueTexts();
         RefreshMetricsText();
+        RefreshStatusText();
+        RefreshGenerateButtonText();
+        RefreshInteractivity();
+        RefreshVisibility();
+    }
+
+    private void ApplyInitialWorkflowState()
+    {
+        hasGeneratedApproximation = false;
+        approximationDirty = false;
+
+        if (coonsGrid != null)
+            coonsGrid.gameObject.SetActive(false);
+
+        if (referenceSurface != null)
+            referenceSurface.gameObject.SetActive(true);
+
+        if (showReferenceToggle != null)
+            showReferenceToggle.isOn = true;
+
+        if (showCoonsGridToggle != null)
+            showCoonsGridToggle.isOn = false;
+
+        RefreshAll();
     }
 
     private void RefreshValueTexts()
@@ -167,8 +236,18 @@ public class AppUIController : MonoBehaviour
 
     private void RefreshMetricsText()
     {
-        if (metricsText == null || analyzer == null)
+        if (metricsText == null)
             return;
+
+        if (!hasGeneratedApproximation || approximationDirty || analyzer == null)
+        {
+            metricsText.text =
+                "Mean Error: Not Computed\n" +
+                "Max Error: Not Computed\n" +
+                "RMSE: Not Computed\n" +
+                "Samples: Not Computed";
+            return;
+        }
 
         metricsText.text =
             $"Mean Error: {analyzer.GetMeanError():F4}\n" +
@@ -177,71 +256,230 @@ public class AppUIController : MonoBehaviour
             $"Samples: {analyzer.GetSampleCount()}";
     }
 
+    private void RefreshStatusText()
+    {
+        if (statusText == null)
+            return;
+
+        if (!hasGeneratedApproximation)
+        {
+            statusText.text = StatusEditingSurface;
+            return;
+        }
+
+        statusText.text = approximationDirty
+            ? StatusRecomputeRequired
+            : StatusApproximationReady;
+    }
+
+    private void RefreshGenerateButtonText()
+    {
+        if (generateApproximationButtonText == null)
+            return;
+
+        generateApproximationButtonText.text = hasGeneratedApproximation
+            ? "Recompute Approximation"
+            : "Generate Approximation";
+    }
+
+    private void RefreshInteractivity()
+    {
+        var approximationReady = hasGeneratedApproximation && !approximationDirty;
+        var heatmapControlsEnabled = approximationReady;
+
+        if (showCoonsGridToggle != null)
+            showCoonsGridToggle.interactable = hasGeneratedApproximation;
+
+        if (heatmapToggle != null)
+            heatmapToggle.interactable = heatmapControlsEnabled;
+
+        if (heatmapMaxErrorSlider != null)
+            heatmapMaxErrorSlider.interactable = heatmapControlsEnabled && heatmapToggle != null && heatmapToggle.isOn;
+    }
+
+    private void RefreshVisibility()
+    {
+        if (referenceSurface != null)
+        {
+            var showReference = showReferenceToggle == null || showReferenceToggle.isOn;
+            referenceSurface.gameObject.SetActive(showReference);
+        }
+
+        if (coonsGrid != null)
+        {
+            var showGrid = hasGeneratedApproximation &&
+                           showCoonsGridToggle != null &&
+                           showCoonsGridToggle.isOn;
+
+            coonsGrid.gameObject.SetActive(showGrid);
+        }
+    }
+
+    private void MarkApproximationDirty()
+    {
+        if (!hasGeneratedApproximation)
+        {
+            RefreshAll();
+            return;
+        }
+
+        approximationDirty = true;
+        RefreshAll();
+    }
+
+    private void GenerateApproximation()
+    {
+        if (referenceSurface == null || coonsGrid == null)
+            return;
+
+        coonsGrid.GenerateGrid();
+
+        hasGeneratedApproximation = true;
+        approximationDirty = false;
+
+        if (showCoonsGridToggle != null)
+            showCoonsGridToggle.isOn = true;
+
+        RefreshAll();
+    }
+
+    private void OnGenerateApproximationClicked()
+    {
+        GenerateApproximation();
+    }
+
     private void OnSurfaceModeChanged(int value)
     {
+        if (suppressCallbacks || referenceSurface == null)
+            return;
+
         referenceSurface.surfaceMode = (SurfaceFunctionProvider.SurfaceMode)value;
         referenceSurface.GenerateSurface();
+
+        MarkApproximationDirty();
         RefreshValueTexts();
     }
 
     private void OnHeightScaleChanged(float value)
     {
+        if (suppressCallbacks || referenceSurface == null)
+            return;
+
         referenceSurface.heightScale = value;
         referenceSurface.GenerateSurface();
+
+        MarkApproximationDirty();
         RefreshValueTexts();
     }
 
     private void OnNoiseScaleChanged(float value)
     {
+        if (suppressCallbacks || referenceSurface == null)
+            return;
+
         referenceSurface.noiseScale = value;
         referenceSurface.GenerateSurface();
+
+        MarkApproximationDirty();
         RefreshValueTexts();
     }
 
     private void OnGridXChanged(float value)
     {
+        if (suppressCallbacks || coonsGrid == null)
+            return;
+
         coonsGrid.gridResolutionX = Mathf.RoundToInt(value);
-        coonsGrid.GenerateGrid();
         RefreshValueTexts();
+
+        if (hasGeneratedApproximation && !approximationDirty)
+            GenerateApproximation();
     }
 
     private void OnGridZChanged(float value)
     {
+        if (suppressCallbacks || coonsGrid == null)
+            return;
+
         coonsGrid.gridResolutionZ = Mathf.RoundToInt(value);
-        coonsGrid.GenerateGrid();
         RefreshValueTexts();
+
+        if (hasGeneratedApproximation && !approximationDirty)
+            GenerateApproximation();
     }
 
     private void OnPatchResolutionChanged(float value)
     {
+        if (suppressCallbacks || coonsGrid == null)
+            return;
+
         coonsGrid.patchResolution = Mathf.RoundToInt(value);
-        coonsGrid.GenerateGrid();
         RefreshValueTexts();
+
+        if (hasGeneratedApproximation && !approximationDirty)
+            GenerateApproximation();
     }
 
     private void OnVerticalOffsetChanged(float value)
     {
+        if (suppressCallbacks || coonsGrid == null)
+            return;
+
         coonsGrid.verticalOffset = value;
-        coonsGrid.GenerateGrid();
         RefreshValueTexts();
+
+        if (hasGeneratedApproximation && !approximationDirty)
+            GenerateApproximation();
+    }
+
+    private void OnShowReferenceChanged(bool value)
+    {
+        if (suppressCallbacks)
+            return;
+
+        RefreshVisibility();
+    }
+
+    private void OnShowCoonsGridChanged(bool value)
+    {
+        if (suppressCallbacks)
+            return;
+
+        RefreshVisibility();
     }
 
     private void OnHeatmapToggleChanged(bool value)
     {
+        if (suppressCallbacks || coonsGrid == null)
+            return;
+
         coonsGrid.enableHeatmap = value;
-        coonsGrid.GenerateGrid();
+
+        if (hasGeneratedApproximation && !approximationDirty)
+            GenerateApproximation();
+        else
+            RefreshInteractivity();
     }
 
     private void OnHeatmapMaxErrorChanged(float value)
     {
+        if (suppressCallbacks || coonsGrid == null)
+            return;
+
         coonsGrid.heatmapMaxError = value;
-        coonsGrid.GenerateGrid();
         RefreshValueTexts();
+
+        if (hasGeneratedApproximation && !approximationDirty)
+            GenerateApproximation();
     }
 
     private void OnRandomizeNoiseClicked()
     {
+        if (referenceSurface == null)
+            return;
+
         referenceSurface.RandomizeNoiseOffsets();
+        MarkApproximationDirty();
         RefreshValueTexts();
     }
 }

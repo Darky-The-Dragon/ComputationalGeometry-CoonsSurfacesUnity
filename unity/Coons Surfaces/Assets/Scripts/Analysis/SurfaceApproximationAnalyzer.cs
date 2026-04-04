@@ -2,23 +2,30 @@ using UnityEngine;
 
 public class SurfaceApproximationAnalyzer : MonoBehaviour
 {
-    [Header("References")]
-    public ReferenceSurfaceGenerator referenceSurface;
+    [Header("References")] public ReferenceSurfaceGenerator referenceSurface;
+
     public CoonsGridGenerator coonsGrid;
 
-    [Header("Sampling")]
-    [Min(2)] public int sampleResolutionX = 50;
+    [Header("Sampling")] [Min(2)] public int sampleResolutionX = 50;
+
     [Min(2)] public int sampleResolutionZ = 50;
 
-    [Header("Options")]
-    public bool analyzeOnStart = true;
+    [Header("Options")] public bool analyzeOnStart = true;
+
     public bool logResults = true;
 
-    [Header("Results (Read Only)")]
-    [SerializeField] private float meanError;
+    [Header("Results (Read Only)")] [SerializeField]
+    private float meanError;
+
     [SerializeField] private float maxError;
     [SerializeField] private float rmse;
     [SerializeField] private int sampleCount;
+
+    private void Start()
+    {
+        if (analyzeOnStart)
+            Analyze();
+    }
 
     private void OnEnable()
     {
@@ -28,12 +35,6 @@ public class SurfaceApproximationAnalyzer : MonoBehaviour
     private void OnDisable()
     {
         Unsubscribe();
-    }
-
-    private void Start()
-    {
-        if (analyzeOnStart)
-            Analyze();
     }
 
     private void Subscribe()
@@ -76,30 +77,30 @@ public class SurfaceApproximationAnalyzer : MonoBehaviour
         if (sampleResolutionX < 2) sampleResolutionX = 2;
         if (sampleResolutionZ < 2) sampleResolutionZ = 2;
 
-        float minX = referenceSurface.MinX;
-        float maxX = referenceSurface.MaxX;
-        float minZ = referenceSurface.MinZ;
-        float maxZ = referenceSurface.MaxZ;
+        var minX = referenceSurface.MinX;
+        var maxX = referenceSurface.MaxX;
+        var minZ = referenceSurface.MinZ;
+        var maxZ = referenceSurface.MaxZ;
 
-        float sumAbsError = 0f;
-        float sumSquaredError = 0f;
-        float worstError = 0f;
-        int count = 0;
+        var sumAbsError = 0f;
+        var sumSquaredError = 0f;
+        var worstError = 0f;
+        var count = 0;
 
-        for (int z = 0; z < sampleResolutionZ; z++)
+        for (var z = 0; z < sampleResolutionZ; z++)
         {
-            float tz = (float)z / (sampleResolutionZ - 1);
-            float worldZ = Mathf.Lerp(minZ, maxZ, tz);
+            var tz = (float)z / (sampleResolutionZ - 1);
+            var worldZ = Mathf.Lerp(minZ, maxZ, tz);
 
-            for (int x = 0; x < sampleResolutionX; x++)
+            for (var x = 0; x < sampleResolutionX; x++)
             {
-                float tx = (float)x / (sampleResolutionX - 1);
-                float worldX = Mathf.Lerp(minX, maxX, tx);
+                var tx = (float)x / (sampleResolutionX - 1);
+                var worldX = Mathf.Lerp(minX, maxX, tx);
 
-                float referenceHeight = referenceSurface.EvaluateHeight(worldX, worldZ);
-                float approxHeight = coonsGrid.EvaluateApproximationHeight(worldX, worldZ);
+                var referenceHeight = referenceSurface.EvaluateHeight(worldX, worldZ);
+                var approxHeight = coonsGrid.EvaluateApproximationHeight(worldX, worldZ);
 
-                float error = Mathf.Abs(referenceHeight - approxHeight);
+                var error = Mathf.Abs(referenceHeight - approxHeight);
 
                 sumAbsError += error;
                 sumSquaredError += error * error;
@@ -116,16 +117,29 @@ public class SurfaceApproximationAnalyzer : MonoBehaviour
         rmse = Mathf.Sqrt(sumSquaredError / count);
 
         if (logResults)
-        {
             Debug.Log(
                 $"[SurfaceApproximationAnalyzer] Samples={sampleCount} | " +
                 $"Mean Error={meanError:F6} | Max Error={maxError:F6} | RMSE={rmse:F6}"
             );
-        }
     }
 
-    public float GetMeanError() => meanError;
-    public float GetMaxError() => maxError;
-    public float GetRMSE() => rmse;
-    public int GetSampleCount() => sampleCount;
+    public float GetMeanError()
+    {
+        return meanError;
+    }
+
+    public float GetMaxError()
+    {
+        return maxError;
+    }
+
+    public float GetRMSE()
+    {
+        return rmse;
+    }
+
+    public int GetSampleCount()
+    {
+        return sampleCount;
+    }
 }

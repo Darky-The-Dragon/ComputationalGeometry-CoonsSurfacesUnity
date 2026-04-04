@@ -2,36 +2,42 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [Header("Movement")]
-    public float moveSpeed = 10f;
+    [Header("Movement")] public float moveSpeed = 10f;
+
     public float fastMoveMultiplier = 3f;
     public float verticalSpeed = 6f;
 
-    [Header("Mouse Look")]
-    public float mouseSensitivity = 2f;
+    [Header("Mouse Look")] public float mouseSensitivity = 2f;
+
+    public float webGLSensitivityMultiplier = 0.35f;
     public float minPitch = -80f;
     public float maxPitch = 80f;
-    public bool invertY = false;
+    public bool invertY;
 
-    [Header("Zoom")]
-    public float zoomSpeed = 20f;
+    [Header("Zoom")] public float zoomSpeed = 20f;
 
-    [Header("Mode Toggle")]
-    public KeyCode toggleCameraModeKey = KeyCode.C;
-    public KeyCode forceUIModeKey = KeyCode.Escape;
-    public bool startInCameraMode = false;
+    [Header("Mode Toggle")] public KeyCode toggleCameraModeKey = KeyCode.C;
 
-    [Header("State (Read Only)")]
-    [SerializeField] private bool cameraInputEnabled = false;
+    public bool startInCameraMode;
 
-    private float yaw;
+    [Header("State (Read Only)")] [SerializeField]
+    private bool cameraInputEnabled;
+
     private float pitch;
+    private float runtimeMouseSensitivity;
+    private float yaw;
 
     private void Start()
     {
-        Vector3 angles = transform.eulerAngles;
+        var angles = transform.eulerAngles;
         yaw = angles.y;
         pitch = angles.x;
+
+        runtimeMouseSensitivity = mouseSensitivity;
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        runtimeMouseSensitivity *= webGLSensitivityMultiplier;
+#endif
 
         SetCameraInputEnabled(startInCameraMode);
     }
@@ -51,14 +57,7 @@ public class PlayerCamera : MonoBehaviour
     private void HandleModeToggle()
     {
         if (Input.GetKeyDown(toggleCameraModeKey))
-        {
             SetCameraInputEnabled(!cameraInputEnabled);
-        }
-
-        if (Input.GetKeyDown(forceUIModeKey))
-        {
-            SetCameraInputEnabled(false);
-        }
     }
 
     private void SetCameraInputEnabled(bool enabled)
@@ -79,8 +78,8 @@ public class PlayerCamera : MonoBehaviour
 
     private void HandleMouseLook()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
+        var mouseX = Input.GetAxisRaw("Mouse X") * runtimeMouseSensitivity;
+        var mouseY = Input.GetAxisRaw("Mouse Y") * runtimeMouseSensitivity;
 
         yaw += mouseX;
         pitch += invertY ? mouseY : -mouseY;
@@ -91,13 +90,13 @@ public class PlayerCamera : MonoBehaviour
 
     private void HandleMovement()
     {
-        float speed = moveSpeed;
+        var speed = moveSpeed;
 
         if (Input.GetKey(KeyCode.LeftShift))
             speed *= fastMoveMultiplier;
 
-        Vector3 forward = transform.forward;
-        Vector3 right = transform.right;
+        var forward = transform.forward;
+        var right = transform.right;
 
         forward.y = 0f;
         right.y = 0f;
@@ -105,7 +104,7 @@ public class PlayerCamera : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        Vector3 move = Vector3.zero;
+        var move = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W)) move += forward;
         if (Input.GetKey(KeyCode.S)) move -= forward;
@@ -122,12 +121,10 @@ public class PlayerCamera : MonoBehaviour
 
     private void HandleZoom()
     {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        var scroll = Input.GetAxis("Mouse ScrollWheel");
 
         if (Mathf.Abs(scroll) > 0.0001f)
-        {
             transform.position += transform.forward * scroll * zoomSpeed;
-        }
     }
 
     public bool IsCameraInputEnabled()
