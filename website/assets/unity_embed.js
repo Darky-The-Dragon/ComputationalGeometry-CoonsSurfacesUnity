@@ -1,6 +1,8 @@
 // unity_embed.js
 (function () {
-  function qs(sel) { return document.querySelector(sel); }
+  function qs(sel) {
+    return document.querySelector(sel);
+  }
 
   window.loadUnityWebGL = function loadUnityWebGL(opts) {
     const buildUrl = opts.buildUrl || "unity/Build";

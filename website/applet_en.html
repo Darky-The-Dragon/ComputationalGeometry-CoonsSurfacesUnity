@@ -11,7 +11,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-title">[Project Title]</span>
+      <span class="brand-title">Surface Approximation using Coons Patches</span>
       <span class="brand-sub">Computational Geometry — AY 2025/2026</span>
     </div>
 
@@ -28,7 +28,8 @@
         <a class="active" href="applet_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank">
+      <a class="github-link" href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity"
+         rel="noopener noreferrer" target="_blank">
         GitHub
       </a>
     </div>
@@ -52,29 +53,119 @@
     </p>
 
     <div id="unity-container">
-      <canvas id="unity-canvas" tabindex="-1"></canvas>
-      <div class="muted" id="unity-loading">Loading…</div>
+      <canvas id="unity-canvas" width="1280" height="720" tabindex="-1"></canvas>
+
+      <div id="unity-loading-bar">
+        <div class="muted unity-loading-label">Loading…</div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+
+      <div id="unity-warning"></div>
+
+      <div id="unity-footer">
+        <div id="unity-build-title">Coons Surfaces</div>
+        <div id="unity-fullscreen-button">Fullscreen</div>
+      </div>
     </div>
   </section>
 
   <footer class="footer">
     <p>
-      © 2025 [Name Surname] — Computational Geometry, University of Milan
+      © 2026 Zotea Dumitru — Computational Geometry, University of Milan
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank">GitHub</a>
+      <a href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity" rel="noopener noreferrer"
+         target="_blank">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>
 
 </main>
 
-<script src="assets/unity_embed.js"></script>
 <script>
-  loadUnityWebGL({
-    name: "<nome>",
-    buildUrl: "unity/Build"
-  });
+  const canvas = document.querySelector("#unity-canvas");
+  const loadingBar = document.querySelector("#unity-loading-bar");
+  const progressBarFull = document.querySelector("#unity-progress-bar-full");
+  const fullscreenButton = document.querySelector("#unity-fullscreen-button");
+  const warningBanner = document.querySelector("#unity-warning");
+
+  function unityShowBanner(msg, type) {
+    function updateBannerVisibility() {
+      warningBanner.style.display = warningBanner.children.length ? "block" : "none";
+    }
+
+    const div = document.createElement("div");
+    div.textContent = msg;
+    div.style.padding = "10px";
+    div.style.marginTop = "10px";
+    div.style.borderRadius = "10px";
+
+    if (type === "error") {
+      div.style.background = "#7f1d1d";
+      div.style.color = "#ffffff";
+    } else {
+      div.style.background = "#854d0e";
+      div.style.color = "#ffffff";
+      setTimeout(() => {
+        if (warningBanner.contains(div)) {
+          warningBanner.removeChild(div);
+          updateBannerVisibility();
+        }
+      }, 5000);
+    }
+
+    warningBanner.appendChild(div);
+    updateBannerVisibility();
+  }
+
+  const buildUrl = "unity/Build";
+  const loaderUrl = buildUrl + "/WebGL2.0.loader.js";
+
+  const config = {
+    dataUrl: buildUrl + "/WebGL2.0.data.unityweb",
+    frameworkUrl: buildUrl + "/WebGL2.0.framework.js.unityweb",
+    codeUrl: buildUrl + "/WebGL2.0.wasm.unityweb",
+    streamingAssetsUrl: "unity/StreamingAssets",
+    companyName: "DarkyTheDragon",
+    productName: "Coons Surfaces",
+    productVersion: "0.1.0",
+    showBanner: unityShowBanner,
+  };
+
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    const meta = document.createElement("meta");
+    meta.name = "viewport";
+    meta.content = "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes";
+    document.head.appendChild(meta);
+  }
+
+  loadingBar.style.display = "block";
+
+  const script = document.createElement("script");
+  script.src = loaderUrl;
+
+  script.onload = () => {
+    createUnityInstance(canvas, config, (progress) => {
+      progressBarFull.style.width = (100 * progress) + "%";
+    }).then((unityInstance) => {
+      loadingBar.style.display = "none";
+      fullscreenButton.onclick = () => {
+        unityInstance.SetFullscreen(1);
+      };
+    }).catch((message) => {
+      unityShowBanner(message, "error");
+      console.error(message);
+    });
+  };
+
+  script.onerror = () => {
+    unityShowBanner("Failed to load the Unity WebGL loader.", "error");
+    console.error("Could not load:", loaderUrl);
+  };
+
+  document.body.appendChild(script);
 </script>
 
 </body>
