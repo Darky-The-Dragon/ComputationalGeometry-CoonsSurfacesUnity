@@ -28,7 +28,8 @@
         <a class="active" href="manual_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
+      <a class="github-link" href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity"
+         rel="noopener noreferrer" target="_blank">
         GitHub
       </a>
     </div>
@@ -40,69 +41,241 @@
   <article class="card">
     <h1>User Manual</h1>
 
-    <ul class="meta">
-      <li><strong>Target:</strong> End users</li>
-      <li><strong>Applet:</strong> Unity WebGL</li>
-    </ul>
-
     <p class="muted">
-      This section describes how to use the application and explains
-      all the parameters available for exploring surface approximation
-      using Coons patches.
+      This section explains in detail how to use the applet.
+      The goal is to allow even a first-time user to clearly understand
+      what is shown on screen, which controls are available, and which
+      operations must be performed to generate and analyze the surface
+      approximation using Coons patches.
     </p>
   </article>
 
   <!-- ========================================= -->
-  <!-- CAMERA -->
+  <!-- INITIAL SCREEN -->
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Scene Controls</h2>
-
-    <ul>
-      <li><strong>Mouse:</strong> camera rotation</li>
-      <li><strong>Scroll:</strong> zoom in/out</li>
-      <li><strong>W A S D:</strong> horizontal movement</li>
-      <li><strong>Q / E:</strong> vertical movement</li>
-      <li><strong>C:</strong> toggle camera mode</li>
-      <li><strong>ESC:</strong> return to UI mode</li>
-    </ul>
+    <h2>Application initial screen</h2>
 
     <p>
-      The application distinguishes between UI interaction mode
-      and camera navigation mode, preventing input conflicts.
+      The following image shows exactly what the user sees when the application starts.
     </p>
 
-    <img src="assets/img/camera_controls.png" alt="Camera controls" class="manual-img"/>
+    <img alt="Application initial screen" class="manual-img" src="assets/images/StartScreen.png"/>
+
+    <p>
+      As soon as the applet opens, the window is already divided into several
+      clearly distinct areas, all visible at the same time. The user does not
+      need to look for hidden menus or open additional panels to begin.
+    </p>
+
+    <p>
+      <strong>On the left side</strong> the main interface panel is always visible.
+      This panel contains all the controls required to use the application:
+      reference surface selection, surface parameters, Coons grid parameters,
+      the approximation generation button, display options, and numerical error values.
+    </p>
+
+    <p>
+      <strong>At the top right</strong> the <em>Controls</em> box is always visible.
+      This box is a constant reminder of the camera movement commands and the most
+      important keys. It helps the user remember how to move through the scene
+      and how to switch from camera control to UI interaction.
+    </p>
+
+    <p>
+      <strong>At the bottom right</strong> the <em>Heatmap Legend</em> box is always visible.
+      This box shows the meaning of the colors used in the error heatmap.
+      Even when the heatmap is not active, the legend remains visible as a constant reference.
+    </p>
+
+    <p>
+      <strong>At the center of the screen</strong> the 3D view of the scene is displayed.
+      In this area the user can observe the reference surface, the generated
+      approximation, the Coons grid, and the heatmap coloring when enabled.
+      All results produced by modifications made in the left panel are shown here.
+    </p>
+
+    <p>
+      It is important to note that during normal use of the applet these elements
+      always remain visible on screen: the left panel, the controls box, and the
+      heatmap legend are not hidden during operation.
+    </p>
   </section>
 
   <!-- ========================================= -->
-  <!-- SURFACE -->
+  <!-- CONTROLS -->
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Reference Surface</h2>
+    <h2>Movement and interaction controls</h2>
 
     <p>
-      The reference surface represents the original geometry
-      that the system attempts to approximate.
-      It is defined as a scalar function over a planar domain.
+      Before modifying the surface parameters, it is important to understand
+      how to move inside the 3D scene and how to switch correctly from
+      camera control to interface interaction.
     </p>
 
-    <h3>Available parameters</h3>
     <ul>
-      <li><strong>Surface Type:</strong> selects analytic or noise-based surface</li>
-      <li><strong>Height Scale:</strong> controls vertical amplitude</li>
-      <li><strong>Noise Scale:</strong> controls frequency/detail</li>
-      <li><strong>Randomize:</strong> generates a new random configuration</li>
+      <li><strong>W A S D:</strong> move the camera on the horizontal plane</li>
+      <li><strong>Q / E:</strong> move the camera up and down</li>
+      <li><strong>Mouse:</strong> rotates the view when camera control is active</li>
+      <li><strong>Mouse scroll:</strong> zooms in and out</li>
+      <li><strong>C:</strong> switches between camera control and UI interaction, and vice versa</li>
+    </ul>
+
+    <img alt="Application controls" class="manual-img" src="assets/images/SceneControls_EN.png"/>
+
+    <p>
+      When the applet starts, the mouse is used to control the camera.
+      This means that moving the mouse changes the scene view.
+      In this mode, the pointer is not free to click normally on interface elements.
+    </p>
+
+    <p>
+      When the user wants to modify a parameter in the left panel,
+      they must press <strong>C</strong>. Pressing this key
+      <strong>releases the mouse from camera control</strong> and makes it
+      available for UI interaction. In this way the user can click menus,
+      move sliders, enable checkboxes, and press buttons.
+    </p>
+
+    <p>
+      After finishing the interaction with the interface, the user can press
+      <strong>C</strong> again to <strong>reassign the mouse to camera control</strong>.
+      From that moment on, the mouse once again rotates the scene view.
+    </p>
+
+    <p>
+      It is very important to understand that the <strong>C</strong> key does not
+      hide any menu and does not change the visibility of the interface.
+      Its only purpose is to change mouse behavior:
+    </p>
+
+    <ul>
+      <li><strong>first press of C:</strong> the mouse is released from the camera and can be used for the UI;</li>
+      <li><strong>second press of C:</strong> the mouse returns to camera control.</li>
     </ul>
 
     <p>
-      More complex surfaces (higher frequency or amplitude)
-      are generally harder to approximate with a limited number of patches.
+      For a first use, it is recommended to try this step immediately:
+      first move the camera, then press C to click on the interface,
+      and finally press C again to return to scene navigation.
+    </p>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- STATUS -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Status indicator</h2>
+
+    <p>
+      The <strong>Status</strong> field in the left panel indicates the current
+      state of the application and helps the user understand when the
+      approximation needs to be recomputed.
     </p>
 
-    <img src="assets/img/surface_examples.png" alt="Surface examples" class="manual-img"/>
+    <ul>
+      <li>
+        <strong>Editing reference surface</strong><br/>
+        Initial status when the application starts. It indicates that the user
+        is editing the reference surface and that the approximation has not yet been generated.
+      </li>
+
+      <li>
+        <strong>Approximation Ready</strong><br/>
+        Indicates that the approximation has been generated and is up to date
+        with the current parameters.
+      </li>
+
+      <li>
+        <strong>Surface changed, recomputation required</strong><br/>
+        Appears when the reference surface is modified after the approximation
+        has already been generated. The user must press
+        <strong>Recompute Approximation</strong> to update the approximated surface.
+      </li>
+    </ul>
+
+    <img alt="Status indicator" class="manual-img" src="assets/images/Status.png"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- REFERENCE SURFACE -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Reference surface</h2>
+
+    <p>
+      The reference surface is the initial surface that the application uses as
+      the model to approximate. All subsequent analysis starts here.
+      First the surface is defined, then its approximation is generated
+      using Coons patches.
+    </p>
+
+    <p>
+      At application startup, the surface is initialized with the following default values:
+    </p>
+
+    <ul>
+      <li><strong>Surface Mode:</strong> Analytic Waves</li>
+      <li><strong>Height Scale:</strong> 0 (initially flat surface)</li>
+      <li><strong>Noise Scale:</strong> not used in Analytic Waves mode</li>
+    </ul>
+
+    <p>
+      With these initial parameters, the reference surface is completely flat.
+      The user can then modify the parameters to introduce variations and
+      observe how the approximation changes.
+    </p>
+
+    <h3>Available parameters</h3>
+
+    <ul>
+      <li>
+        <strong>Surface Mode:</strong><br/>
+        Selects the type of reference surface to generate.
+        The available modes are:
+        <ul>
+          <li><strong>Analytic Waves</strong> (default)</li>
+          <li><strong>Perlin Noise</strong></li>
+          <li><strong>Layered Perlin Noise</strong></li>
+        </ul>
+        Depending on the selected mode, the shape of the surface changes noticeably.
+      </li>
+
+      <li>
+        <strong>Height Scale:</strong><br/>
+        Controls how much the surface develops vertically. Small values
+        produce a flatter surface, while higher values produce more pronounced
+        peaks and depressions. With value zero, the surface is completely flat.
+      </li>
+
+      <li>
+        <strong>Noise Scale:</strong><br/>
+        This parameter is active only when the selected mode is
+        <strong>Perlin Noise</strong> or <strong>Layered Perlin Noise</strong>.
+        In these modes it controls the distribution of noise on the surface.
+        In <strong>Analytic Waves</strong> mode this parameter has no effect.
+      </li>
+
+      <li>
+        <strong>Randomize Noise:</strong><br/>
+        This button is used exclusively in
+        <strong>Perlin Noise</strong> and <strong>Layered Perlin Noise</strong> modes.
+        Pressing it generates a new random noise configuration.
+        In <strong>Analytic Waves</strong> mode the button does not modify the surface.
+      </li>
+    </ul>
+
+    <p>
+      In general, surfaces with more irregular details, faster variations,
+      or stronger height changes are more difficult to approximate with a coarse grid.
+    </p>
+
+    <img alt="Reference surface examples" class="manual-img" src="assets/images/ReferenceSurface.png"/>
   </section>
 
   <!-- ========================================= -->
@@ -110,52 +283,185 @@
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Domain Subdivision</h2>
+    <h2>Coons grid settings</h2>
 
     <p>
-      The domain is subdivided into a rectangular grid.
-      Each cell corresponds to a Coons patch.
+      After selecting the reference surface, the user must set the grid used
+      to construct the approximation. The domain is subdivided into a rectangular
+      grid, and each grid cell corresponds to one Coons patch.
     </p>
 
+    <h3>Available parameters</h3>
+
     <ul>
-      <li><strong>Grid Resolution X:</strong> number of divisions along X</li>
-      <li><strong>Grid Resolution Z:</strong> number of divisions along Z</li>
+      <li>
+        <strong>Grid Vertical Offset:</strong><br/>
+        Defines the vertical distance between the reference surface and the
+        approximated surface. This parameter does not modify the mathematical
+        quality of the approximation, but is used only to visually separate
+        the two surfaces and avoid overlap that would make comparison difficult.
+      </li>
+
+      <li>
+        <strong>Grid Resolution X:</strong> and <strong>Grid Resolution Z</strong><br/>
+        Define the number of subdivisions of the domain along the X axis and
+        the Z axis respectively. Increasing these values:
+        <ul>
+          <li>makes the patches smaller;</li>
+          <li>makes the grid denser;</li>
+          <li>generally improves the approximation;</li>
+          <li>increases computational cost.</li>
+        </ul>
+      </li>
+
+      <li>
+        <strong>Patch Resolution:</strong><br/>
+        Controls the density of the mesh used to display each patch.
+        This parameter mainly affects the visual appearance of the rendered
+        surface, making it smoother or more detailed, but it does not modify
+        the mathematical definition of the patch.
+      </li>
     </ul>
 
-    <p>
-      Increasing the grid resolution:
-    </p>
-    <ul>
-      <li>reduces patch size</li>
-      <li>improves approximation accuracy</li>
-      <li>increases computational cost</li>
-    </ul>
-
-    <img src="assets/img/grid_resolution.png" alt="Grid resolution" class="manual-img"/>
+    <img alt="Coons grid" class="manual-img" src="assets/images/CoonsGrid.png"/>
   </section>
 
   <!-- ========================================= -->
-  <!-- PATCH -->
+  <!-- GENERATION -->
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Coons Patches</h2>
+    <h2>Generating the approximation</h2>
 
     <p>
-      Each grid cell is approximated using a bilinear Coons patch,
-      constructed from the boundary curves sampled from the reference surface.
+      After defining the reference surface and the grid parameters,
+      the user must press the <strong>Generate Approximation</strong> button.
+      This step is essential.
+    </p>
+
+    <p>
+      Pressing this button causes the application to:
     </p>
 
     <ul>
-      <li><strong>Patch Resolution:</strong> internal mesh density</li>
+      <li>read the currently selected parameters;</li>
+      <li>build the Coons grid;</li>
+      <li>generate the approximated surface;</li>
+      <li>update the numerical error values.</li>
     </ul>
 
     <p>
-      This parameter affects only the visual smoothness of the rendered surface,
-      not the mathematical definition of the patch.
+      After the first generation, the button changes its state and is displayed as
+      <strong>Recompute Approximation</strong>. This indicates that the
+      approximation can be recalculated after modifying parameters.
     </p>
 
-    <img src="assets/img/patch_resolution.png" alt="Patch resolution" class="manual-img"/>
+    <p>
+      Once the approximation has been generated, some grid parameters,
+      such as resolution and vertical offset, can be modified and the result
+      is updated <strong>in real time</strong> on the approximated surface.
+      This allows the user to immediately observe the effect of the changes.
+    </p>
+
+    <p>
+      If instead the parameters of the <strong>reference surface</strong> are modified,
+      the approximation is not updated automatically. In this case, the
+      <strong>Status</strong> field displays the message:
+    </p>
+
+    <div class="status-box">
+      Surface changed, Recomputation Required
+    </div>
+
+    <p>
+      This indicates that the reference surface has changed and that the user
+      must press <strong>Recompute Approximation</strong> again in order to update
+      the approximated surface according to the new parameters.
+    </p>
+
+    <p>
+      After generation, the result can be observed directly in the 3D scene
+      and analyzed through the display options and the metrics shown in the panel.
+    </p>
+
+    <img alt="Coons patch generation" class="manual-img" src="assets/images/GenerateApproximation.png"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- DISPLAY -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Display options</h2>
+
+    <p>
+      The <strong>Display Options</strong> section allows the user to control
+      which elements are visible in the scene. These options are useful for
+      comparing the reference surface with the approximation and for analyzing error.
+    </p>
+
+    <h3>Available parameters</h3>
+
+    <ul>
+      <li>
+        <strong>Show Reference Surface</strong><br/>
+        Shows or hides the reference surface. When disabled, it becomes easier
+        to observe the approximated surface more clearly.
+      </li>
+
+      <li>
+        <strong>Show Coons Grid</strong><br/>
+        Shows or hides the Coons grid. When enabled, it makes the subdivision
+        of the domain into individual patches visible.
+      </li>
+
+      <li>
+        <strong>Enable Heatmap</strong><br/>
+        Enables coloring of the approximated surface according to the local
+        approximation error. This makes it immediately visible in which areas
+        the approximation is better and in which areas it is worse.
+      </li>
+
+      <li>
+        <strong>Heatmap Max Error</strong><br/>
+        Controls the maximum range used for heatmap coloring.
+        This parameter does not modify the real error, but only changes
+        how the error is represented visually.
+      </li>
+    </ul>
+
+    <p>
+      By combining these options, the user can directly compare the original
+      surface with the approximated one and visually analyze the distribution of error.
+    </p>
+
+    <img alt="Heatmap error" class="manual-img" src="assets/images/HeatmapError.png"/>
+
+    <h3>Heatmap interpretation</h3>
+
+    <p>
+      When the heatmap is active, the colors on the surface represent the local
+      approximation error. The legend visible in the application helps the user
+      read these colors correctly.
+    </p>
+
+    <ul>
+      <li><strong>Blue:</strong> low error</li>
+      <li><strong>Green:</strong> moderate error</li>
+      <li><strong>Yellow:</strong> high error</li>
+      <li><strong>Red:</strong> very high error</li>
+    </ul>
+
+    <p>
+      In general, blue regions indicate areas where the approximated surface
+      follows the reference surface well, while red regions indicate areas where
+      the difference is greater.
+    </p>
+
+    <p>
+      The legend always remains visible on the right side of the screen as a
+      constant reference for the user.
+    </p>
   </section>
 
   <!-- ========================================= -->
@@ -163,88 +469,105 @@
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Error Analysis</h2>
+    <h2>Error analysis</h2>
 
     <p>
-      The application compares the approximated surface with the reference surface
-      by evaluating the error at sampled points.
+      Once the approximation has been generated, the applet compares the
+      approximated surface with the reference surface by computing the error
+      over a set of sampled points.
     </p>
 
     <ul>
-      <li><strong>Mean Error:</strong> average deviation</li>
-      <li><strong>Max Error:</strong> maximum deviation</li>
+      <li><strong>Mean Error:</strong> average error</li>
+      <li><strong>Max Error:</strong> maximum error</li>
       <li><strong>RMSE:</strong> root mean square error</li>
-      <li><strong>Sample Count:</strong> number of evaluated points</li>
+      <li><strong>Samples:</strong> number of samples used for the computation</li>
     </ul>
 
     <p>
-      These metrics provide a quantitative evaluation of the approximation quality.
+      These values provide a quantitative evaluation of the approximation quality.
+      A heatmap can help show where the error is higher, but these metrics
+      provide a direct numerical comparison.
     </p>
 
-    <img src="assets/img/error_metrics.png" alt="Error metrics" class="manual-img"/>
+    <p>
+      If the fields display <strong>Not Computed</strong>, it means that the
+      approximation has not yet been generated or that the analysis is not yet available.
+    </p>
+
+    <img alt="Error metrics" class="manual-img" src="assets/images/ErrorAnalysis.png"/>
   </section>
 
   <!-- ========================================= -->
-  <!-- HEATMAP -->
+  <!-- RECOMMENDED PROCEDURE -->
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Heatmap</h2>
+    <h2>Recommended procedure for first use</h2>
 
     <p>
-      The approximation error is visualized through a color map applied to the surface.
+      A user opening the application for the first time can follow the steps
+      below to quickly understand the general workflow and obtain a correct first approximation.
     </p>
 
-    <ul>
-      <li><strong>Enable Heatmap:</strong> toggle visualization</li>
-      <li><strong>Max Error Range:</strong> controls color normalization</li>
-    </ul>
+    <ol>
+      <li>Start the applet and observe the initial screen.</li>
 
-    <p>Color encoding:</p>
+      <li>
+        Identify the three main elements:
+        the control panel on the left, the controls box at the top right,
+        and the heatmap legend at the bottom right.
+      </li>
 
-    <ul>
-      <li>Blue → low error</li>
-      <li>Green → moderate error</li>
-      <li>Yellow → high error</li>
-      <li>Red → very high error</li>
-    </ul>
+      <li>
+        Move the camera using W, A, S, D, Q, E, the mouse, and the mouse wheel
+        to explore the scene.
+      </li>
+
+      <li>
+        Press <strong>C</strong> to release the mouse and interact with the interface.
+      </li>
+
+      <li>
+        Choose the type of reference surface.
+      </li>
+
+      <li>
+        Adjust the surface parameters.
+      </li>
+
+      <li>
+        Set the Coons grid parameters.
+      </li>
+
+      <li>
+        Press <strong>Generate Approximation</strong> to generate the approximation.
+      </li>
+
+      <li>
+        Use the display options to compare the approximated surface with the reference surface.
+      </li>
+
+      <li>
+        Enable the heatmap and inspect the numerical error values if needed.
+      </li>
+
+      <li>
+        Press <strong>C</strong> again to return to camera control and explore the scene.
+      </li>
+    </ol>
 
     <p>
-      Regions with higher curvature tend to exhibit larger approximation errors.
+      This sequence represents a typical usage flow and allows the user
+      to quickly understand all the main features of the application.
     </p>
-
-    <img src="assets/img/heatmap.png" alt="Error heatmap" class="manual-img"/>
   </section>
 
   <!-- ========================================= -->
-  <!-- OFFSET -->
-  <!-- ========================================= -->
 
   <section class="card">
-    <h2>Vertical Offset</h2>
-
     <p>
-      The approximated surface can be vertically shifted
-      to improve visual comparison with the reference surface.
-    </p>
-
-    <ul>
-      <li><strong>Vertical Offset:</strong> separation between surfaces</li>
-    </ul>
-
-    <p>
-      This parameter does not affect the approximation itself,
-      but improves readability by avoiding overlap.
-    </p>
-
-    <img src="assets/img/offset.png" alt="Vertical offset" class="manual-img"/>
-  </section>
-
-  <!-- ========================================= -->
-
-  <section class="card">
-    <p class="muted">
-      For a practical demonstration, open the
+      For a practical demonstration, visit the
       <a href="applet_en.html">Applet</a>.
     </p>
   </section>
@@ -254,7 +577,8 @@
       © 2026 Zotea Dumitru — Computational Geometry, University of Milan
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity" rel="noopener noreferrer"
+         target="_blank">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>

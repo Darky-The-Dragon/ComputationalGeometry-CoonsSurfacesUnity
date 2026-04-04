@@ -28,7 +28,8 @@
         <a href="manual_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
+      <a class="github-link" href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity"
+         rel="noopener noreferrer" target="_blank">
         GitHub
       </a>
     </div>
@@ -40,40 +41,175 @@
   <article class="card">
     <h1>Manuale utente</h1>
 
-    <ul class="meta">
-      <li><strong>Target:</strong> Utenti finali</li>
-      <li><strong>Applet:</strong> Unity WebGL</li>
-    </ul>
-
     <p class="muted">
-      Questa sezione descrive il funzionamento dell’applet e i parametri
-      disponibili per l’esplorazione dell’approssimazione mediante patch di Coons.
+      Questa sezione descrive in modo dettagliato come usare l’applet.
+      L’obiettivo è permettere anche a un utente che la apre per la prima volta
+      di capire chiaramente cosa vede a schermo, quali controlli può usare e
+      quali operazioni deve eseguire per generare e analizzare l’approssimazione
+      della superficie mediante patch di Coons.
     </p>
   </article>
 
   <!-- ========================================= -->
-  <!-- CAMERA E CONTROLLI -->
+  <!-- SCHERMATA INIZIALE -->
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Controllo della scena</h2>
+    <h2>Schermata iniziale dell’applicazione</h2>
+
+    <p>
+      L’immagine seguente mostra esattamente ciò che l’utente vede quando
+      l’applicazione viene avviata.
+    </p>
+
+    <img alt="Schermata iniziale dell'applicazione" class="manual-img" src="assets/images/StartScreen.png"/>
+
+    <p>
+      Appena l’applet si apre, la finestra è già composta da più aree ben distinte,
+      tutte visibili contemporaneamente. L’utente non deve cercare menu nascosti
+      o aprire pannelli aggiuntivi per iniziare.
+    </p>
+
+    <p>
+      <strong>Sul lato sinistro</strong> è sempre presente il pannello principale
+      dell’interfaccia. Questo pannello contiene tutti i controlli necessari per
+      usare l’applicazione: la scelta del tipo di superficie di riferimento, i
+      parametri della superficie, i parametri della griglia di Coons, il pulsante
+      per generare l’approssimazione, le opzioni di visualizzazione e i valori
+      numerici relativi all’errore.
+    </p>
+
+    <p>
+      <strong>In alto a destra</strong> è sempre presente il riquadro
+      <em>Controls</em>. Questo riquadro è un promemoria costante dei comandi di
+      movimento della telecamera e dei tasti più importanti. Serve a ricordare
+      all’utente come muoversi nella scena e come passare dal controllo della
+      camera all’interazione con l’interfaccia.
+    </p>
+
+    <p>
+      <strong>In basso a destra</strong> è sempre presente il riquadro
+      <em>Heatmap Legend</em>. Questo riquadro mostra il significato dei colori
+      usati nella heatmap dell’errore. Anche se la heatmap non è ancora attiva,
+      la legenda rimane visibile come riferimento costante.
+    </p>
+
+    <p>
+      <strong>Al centro dello schermo</strong> si trova la vista 3D della scena.
+      In quest’area l’utente osserva la superficie di riferimento, l’eventuale
+      approssimazione generata, la griglia di Coons e la colorazione della
+      heatmap, se attivata. Tutti i risultati delle modifiche effettuate nel
+      pannello di sinistra vengono osservati qui.
+    </p>
+
+    <p>
+      È importante notare che durante il normale funzionamento dell’applet questi
+      elementi restano sempre visibili sullo schermo: il pannello di sinistra,
+      il riquadro dei comandi e la legenda della heatmap non vengono nascosti
+      durante l’uso.
+    </p>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- CONTROLLI -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Comandi di movimento e interazione</h2>
+
+    <p>
+      Prima di modificare i parametri della superficie, è importante capire come
+      muoversi all’interno della scena 3D e come passare correttamente dal
+      controllo della telecamera all’interazione con l’interfaccia.
+    </p>
 
     <ul>
-      <li><strong>Mouse:</strong> rotazione della camera</li>
-      <li><strong>Scroll:</strong> zoom avanti/indietro</li>
-      <li><strong>W A S D:</strong> movimento nel piano orizzontale</li>
-      <li><strong>Q / E:</strong> movimento verticale</li>
-      <li><strong>C:</strong> attiva/disattiva modalità camera</li>
-      <li><strong>ESC:</strong> ritorna alla modalità UI</li>
+      <li><strong>W A S D:</strong> spostano la telecamera nel piano orizzontale</li>
+      <li><strong>Q / E:</strong> spostano la telecamera verso l’alto o verso il basso</li>
+      <li><strong>Mouse:</strong> ruota la visuale quando il controllo della camera è attivo</li>
+      <li><strong>Scroll del mouse:</strong> esegue lo zoom avanti o indietro</li>
+      <li><strong>C:</strong> passa dal controllo della camera all’interazione con la UI, e viceversa</li>
+    </ul>
+
+    <img alt="Comandi dell'applicazione" class="manual-img" src="assets/images/SceneControls_IT.png"/>
+
+    <p>
+      All’avvio dell’applet, il mouse viene usato per controllare la telecamera.
+      Questo significa che muovendo il mouse si modifica la visuale della scena.
+      In questa modalità, il puntatore non è libero di cliccare normalmente sugli
+      elementi dell’interfaccia.
+    </p>
+
+    <p>
+      Quando l’utente vuole modificare un parametro nel pannello di sinistra,
+      deve premere <strong>C</strong>. Premendo questo tasto, il mouse viene
+      <strong>sganciato dal controllo della telecamera</strong> e torna
+      disponibile per interagire con la UI. In questo modo l’utente può cliccare
+      sui menu, spostare gli slider, attivare le caselle e premere i pulsanti.
+    </p>
+
+    <p>
+      Dopo aver terminato l’interazione con l’interfaccia, l’utente può premere
+      di nuovo <strong>C</strong> per <strong>riassociare il mouse al controllo
+      della telecamera</strong>. Da quel momento il mouse torna a ruotare la
+      visuale della scena.
+    </p>
+
+    <p>
+      È molto importante capire che il tasto <strong>C</strong> non nasconde
+      alcun menu e non modifica la visibilità dell’interfaccia. Il suo unico
+      scopo è cambiare il comportamento del mouse:
+    </p>
+
+    <ul>
+      <li><strong>prima pressione di C:</strong> il mouse viene liberato dalla camera e può usare la UI;</li>
+      <li><strong>seconda pressione di C:</strong> il mouse torna a controllare la camera.</li>
     </ul>
 
     <p>
-      L’applicazione distingue tra modalità di interazione con l’interfaccia
-      e modalità di esplorazione della scena, evitando interferenze tra input e UI.
+      Per un primo utilizzo si consiglia di provare subito questo passaggio:
+      muovere prima la camera, poi premere C per cliccare nell’interfaccia, e
+      infine premere di nuovo C per tornare alla navigazione della scena.
+    </p>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- STATUS -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Indicatore di stato</h2>
+
+    <p>
+      Il campo <strong>Status</strong> nel pannello di sinistra indica lo stato
+      corrente dell’applicazione e aiuta a capire quando è necessario ricalcolare
+      l’approssimazione.
     </p>
 
-    <!-- IMG PLACEHOLDER -->
-    <img src="assets/img/camera_controls.png" alt="Controlli camera" class="manual-img"/>
+    <ul>
+      <li>
+        <strong>Editing reference surface</strong><br/>
+        Stato iniziale all’avvio dell’applicazione. Indica che l’utente sta
+        modificando la superficie di riferimento e che l’approssimazione non è
+        ancora stata generata.
+      </li>
+
+      <li>
+        <strong>Approximation Ready</strong><br/>
+        Indica che l’approssimazione è stata generata ed è aggiornata rispetto
+        ai parametri correnti.
+      </li>
+
+      <li>
+        <strong>Surface changed, recomputation required</strong><br/>
+        Compare quando la superficie di riferimento viene modificata dopo aver
+        generato l’approssimazione. È necessario premere
+        <strong>Recompute Approximation</strong> per aggiornare la superficie
+        approssimata.
+      </li>
+    </ul>
+
+    <img alt="Indicatore di stato" class="manual-img" src="assets/images/Status.png"/>
   </section>
 
   <!-- ========================================= -->
@@ -84,24 +220,79 @@
     <h2>Superficie di riferimento</h2>
 
     <p>
-      La superficie di riferimento rappresenta il dato iniziale che si intende approssimare.
-      È definita come funzione scalare sul dominio (x, z).
+      La superficie di riferimento è la superficie iniziale che l’applicazione
+      usa come modello da approssimare. Tutta l’analisi successiva parte da qui.
+      Prima si definisce questa superficie, poi si genera la sua approssimazione
+      mediante patch di Coons.
     </p>
 
-    <h3>Parametri disponibili</h3>
+    <p>
+      All’avvio dell’applicazione, la superficie è impostata con i seguenti valori
+      di default:
+    </p>
+
     <ul>
-      <li><strong>Surface Type:</strong> seleziona il tipo di superficie (analitica o rumore)</li>
-      <li><strong>Height Scale:</strong> controlla l’ampiezza verticale</li>
-      <li><strong>Noise Scale:</strong> controlla la frequenza del rumore</li>
-      <li><strong>Randomize:</strong> genera una nuova configurazione casuale</li>
+      <li><strong>Surface Mode:</strong> Analytic Waves</li>
+      <li><strong>Height Scale:</strong> 0 (superficie inizialmente piatta)</li>
+      <li><strong>Noise Scale:</strong> non utilizzato in modalità Analytic Waves</li>
     </ul>
 
     <p>
-      Superfici più complesse (alta frequenza o ampiezza elevata) risultano
-      più difficili da approssimare con un numero limitato di patch.
+      Con questi parametri iniziali la superficie di riferimento risulta completamente
+      piatta. L’utente può quindi modificare i parametri per introdurre variazioni
+      e osservare come cambia l’approssimazione.
     </p>
 
-    <img src="assets/img/surface_examples.png" alt="Esempi di superficie" class="manual-img"/>
+    <h3>Parametri disponibili</h3>
+
+    <ul>
+      <li>
+        <strong>Surface Mode:</strong><br/>
+        Seleziona il tipo di superficie di riferimento da generare. Le modalità
+        disponibili sono:
+        <ul>
+          <li><strong>Analytic Waves</strong> (default)</li>
+          <li><strong>Perlin Noise</strong></li>
+          <li><strong>Layered Perlin Noise</strong></li>
+        </ul>
+        A seconda della modalità selezionata, la forma della superficie cambia in
+        modo evidente.
+      </li>
+
+      <li>
+        <strong>Height Scale:</strong><br/>
+        Controlla quanto la superficie si sviluppa in altezza. Valori piccoli
+        producono una superficie più piatta, mentre valori più alti producono
+        rilievi e avvallamenti più marcati. Con valore pari a zero, la superficie
+        risulta completamente piana.
+      </li>
+
+      <li>
+        <strong>Noise Scale:</strong><br/>
+        Questo parametro è attivo solo quando la modalità selezionata è
+        <strong>Perlin Noise</strong> oppure <strong>Layered Perlin Noise</strong>.
+        In queste modalità controlla la distribuzione del rumore sulla superficie.
+        Nella modalità <strong>Analytic Waves</strong> questo parametro non ha
+        effetto.
+      </li>
+
+      <li>
+        <strong>Randomize Noise:</strong><br/>
+        Questo pulsante è utilizzato esclusivamente nelle modalità
+        <strong>Perlin Noise</strong> e <strong>Layered Perlin Noise</strong>.
+        Premendolo viene generata una nuova configurazione casuale del rumore.
+        Nella modalità <strong>Analytic Waves</strong> il pulsante non modifica
+        la superficie.
+      </li>
+    </ul>
+
+    <p>
+      In generale, superfici con dettagli più irregolari, con variazioni più rapide
+      o con rilievi più forti sono più difficili da approssimare con una griglia
+      poco fitta.
+    </p>
+
+    <img alt="Esempi di superficie" class="manual-img" src="assets/images/ReferenceSurface.png"/>
   </section>
 
   <!-- ========================================= -->
@@ -109,52 +300,190 @@
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Suddivisione del dominio</h2>
+    <h2>Impostazioni della griglia di Coons</h2>
 
     <p>
-      Il dominio viene suddiviso in una griglia rettangolare.
-      Ogni cella della griglia corrisponde a una patch di Coons.
+      Dopo aver scelto la superficie di riferimento, l’utente deve impostare la
+      griglia utilizzata per costruire l’approssimazione. Il dominio viene
+      suddiviso in una griglia rettangolare e ogni cella della griglia
+      corrisponde a una patch di Coons.
     </p>
 
+    <h3>Parametri disponibili</h3>
+
     <ul>
-      <li><strong>Grid Resolution X:</strong> numero di divisioni lungo X</li>
-      <li><strong>Grid Resolution Z:</strong> numero di divisioni lungo Z</li>
+      <li>
+        <strong>Grid Vertical Offset:</strong><br/>
+        Definisce la distanza verticale tra la superficie di riferimento e la
+        superficie approssimata. Questo parametro non modifica la qualità
+        matematica dell’approssimazione, ma serve esclusivamente a separare
+        visivamente le due superfici, evitando sovrapposizioni che renderebbero
+        difficile il confronto.
+      </li>
+
+      <li>
+        <strong>Grid Resolution X:</strong> e <strong>Grid Resolution Z</strong><br/>
+        Definiscono il numero di suddivisioni del dominio rispettivamente lungo
+        l’asse X e l’asse Z. Aumentando questi valori:
+        <ul>
+          <li>le patch diventano più piccole;</li>
+          <li>la griglia diventa più fitta;</li>
+          <li>l’approssimazione tende a migliorare;</li>
+          <li>aumenta il costo computazionale.</li>
+        </ul>
+      </li>
+
+      <li>
+        <strong>Patch Resolution:</strong><br/>
+        Controlla la densità della mesh utilizzata per visualizzare ogni patch.
+        Questo parametro influisce principalmente sull’aspetto visivo della
+        superficie renderizzata, rendendola più liscia o più dettagliata, ma non
+        modifica la definizione matematica della patch.
+      </li>
     </ul>
 
-    <p>
-      Aumentando la risoluzione della griglia:
-    </p>
-    <ul>
-      <li>si riduce la dimensione delle patch</li>
-      <li>si migliora l’accuratezza dell’approssimazione</li>
-      <li>aumenta il costo computazionale</li>
-    </ul>
-
-    <img src="assets/img/grid_resolution.png" alt="Griglia Coons" class="manual-img"/>
+    <img alt="Griglia Coons" class="manual-img" src="assets/images/CoonsGrid.png"/>
   </section>
 
   <!-- ========================================= -->
-  <!-- PATCH -->
+  <!-- GENERAZIONE -->
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Patch di Coons</h2>
+    <h2>Generazione dell’approssimazione</h2>
 
     <p>
-      Ogni cella della griglia è approssimata mediante una patch di Coons bilineare,
-      costruita a partire dalle curve di bordo della superficie di riferimento.
+      Dopo aver definito la superficie di riferimento e i parametri della griglia,
+      l’utente deve premere il pulsante <strong>Generate Approximation</strong>.
+      Questo passaggio è fondamentale.
+    </p>
+
+    <p>
+      Premendo questo pulsante, l’applicazione:
     </p>
 
     <ul>
-      <li><strong>Patch Resolution:</strong> densità della mesh interna della patch</li>
+      <li>legge i parametri attualmente impostati;</li>
+      <li>costruisce la griglia di Coons;</li>
+      <li>genera la superficie approssimata;</li>
+      <li>aggiorna i valori numerici dell’errore.</li>
     </ul>
 
     <p>
-      Questo parametro influenza esclusivamente la qualità visiva della superficie
-      renderizzata, senza modificare la definizione matematica della patch.
+      Dopo la prima generazione, il pulsante cambia stato e viene mostrato come
+      <strong>Recompute Approximation</strong>. Questo indica che è possibile
+      ricalcolare l’approssimazione dopo aver modificato i parametri.
     </p>
 
-    <img src="assets/img/patch_resolution.png" alt="Risoluzione patch" class="manual-img"/>
+    <p>
+      Una volta generata l’approssimazione, alcuni parametri della griglia, come
+      la risoluzione e l’offset verticale, possono essere modificati e il risultato
+      viene aggiornato <strong>in tempo reale</strong> sulla superficie approssimata.
+      Questo permette all’utente di osservare immediatamente l’effetto delle modifiche.
+    </p>
+
+    <p>
+      Se invece vengono modificati i parametri della <strong>superficie di riferimento</strong>,
+      l’approssimazione non viene aggiornata automaticamente. In questo caso, il campo
+      <strong>Status</strong> mostrerà il messaggio:
+    </p>
+
+    <div class="status-box">
+      Surface changed, Recomputation Required
+    </div>
+
+    <p>
+      Questo indica che la superficie di riferimento è cambiata e che è necessario
+      premere nuovamente il pulsante <strong>Recompute Approximation</strong> per
+      aggiornare la superficie approssimata in base ai nuovi parametri.
+    </p>
+
+    <p>
+      Dopo la generazione, il risultato può essere osservato direttamente nella
+      scena 3D e analizzato tramite le opzioni di visualizzazione e le metriche
+      presenti nel pannello.
+    </p>
+
+    <img alt="Patch di Coons" class="manual-img" src="assets/images/GenerateApproximation.png"/>
+  </section>
+
+  <!-- ========================================= -->
+  <!-- DISPLAY -->
+  <!-- ========================================= -->
+
+  <section class="card">
+    <h2>Opzioni di visualizzazione</h2>
+
+    <p>
+      La sezione <strong>Display Options</strong> permette di controllare quali
+      elementi devono essere visibili nella scena. Queste opzioni sono utili per
+      confrontare la superficie di riferimento con l’approssimazione e per
+      analizzare l’errore.
+    </p>
+
+    <h3>Parametri disponibili</h3>
+
+    <ul>
+      <li>
+        <strong>Show Reference Surface</strong><br/>
+        Mostra o nasconde la superficie di riferimento. Disattivando questa
+        opzione è possibile osservare più chiaramente la superficie approssimata.
+      </li>
+
+      <li>
+        <strong>Show Coons Grid</strong><br/>
+        Mostra o nasconde la griglia di Coons. Quando attiva, rende visibile la
+        suddivisione del dominio nelle singole patch.
+      </li>
+
+      <li>
+        <strong>Enable Heatmap</strong><br/>
+        Attiva la colorazione della superficie approssimata in base all’errore
+        locale. In questo modo diventa immediatamente visibile in quali zone
+        l’approssimazione è migliore e in quali è peggiore.
+      </li>
+
+      <li>
+        <strong>Heatmap Max Error</strong><br/>
+        Controlla l’intervallo massimo utilizzato per la colorazione della
+        heatmap. Questo parametro non modifica l’errore reale, ma cambia
+        solamente il modo in cui l’errore viene rappresentato visivamente.
+      </li>
+    </ul>
+
+    <p>
+      Combinando queste opzioni è possibile confrontare direttamente la superficie
+      originale con quella approssimata e analizzare visivamente la distribuzione
+      dell’errore.
+    </p>
+
+    <img alt="Heatmap error" class="manual-img" src="assets/images/HeatmapError.png"/>
+
+    <h3>Interpretazione della heatmap</h3>
+
+    <p>
+      Quando la heatmap è attiva, i colori della superficie rappresentano
+      l’errore locale di approssimazione. La legenda visibile nell’applicazione
+      aiuta a leggere correttamente questi colori.
+    </p>
+
+    <ul>
+      <li><strong>Blu:</strong> errore basso</li>
+      <li><strong>Verde:</strong> errore moderato</li>
+      <li><strong>Giallo:</strong> errore alto</li>
+      <li><strong>Rosso:</strong> errore molto alto</li>
+    </ul>
+
+    <p>
+      In generale, le zone blu indicano regioni in cui la superficie approssimata
+      segue bene la superficie di riferimento, mentre le zone rosse indicano
+      regioni in cui la differenza è maggiore.
+    </p>
+
+    <p>
+      La legenda resta sempre visibile sul lato destro dello schermo come
+      riferimento costante per l’utente.
+    </p>
   </section>
 
   <!-- ========================================= -->
@@ -165,87 +494,108 @@
     <h2>Analisi dell’errore</h2>
 
     <p>
-      L’applet confronta la superficie approssimata con quella di riferimento
-      calcolando l’errore su un insieme di punti campionati.
+      Una volta generata l’approssimazione, l’applet confronta la superficie
+      approssimata con quella di riferimento calcolando l’errore su un insieme di
+      punti campionati.
     </p>
 
     <ul>
       <li><strong>Mean Error:</strong> errore medio</li>
       <li><strong>Max Error:</strong> errore massimo</li>
       <li><strong>RMSE:</strong> errore quadratico medio</li>
-      <li><strong>Sample Count:</strong> numero di punti analizzati</li>
+      <li><strong>Samples:</strong> numero di campioni usati per il calcolo</li>
     </ul>
 
     <p>
-      Queste metriche permettono di valutare quantitativamente la qualità
-      dell’approssimazione.
+      Questi valori permettono di valutare quantitativamente la qualità
+      dell’approssimazione. Una heatmap può aiutare a capire dove l’errore è più
+      alto, ma queste metriche forniscono un confronto numerico diretto.
     </p>
 
-    <img src="assets/img/error_metrics.png" alt="Metriche errore" class="manual-img"/>
+    <p>
+      Se i campi mostrano la scritta <strong>Not Computed</strong>, significa che
+      l’approssimazione non è stata ancora generata oppure che l’analisi non è
+      ancora disponibile.
+    </p>
+
+    <img alt="Metriche errore" class="manual-img" src="assets/images/ErrorAnalysis.png"/>
   </section>
 
   <!-- ========================================= -->
-  <!-- HEATMAP -->
+  <!-- PROCEDURA CONSIGLIATA -->
   <!-- ========================================= -->
 
   <section class="card">
-    <h2>Heatmap</h2>
+    <h2>Procedura consigliata per il primo utilizzo</h2>
 
     <p>
-      L’errore viene visualizzato tramite una mappa di colori sulla superficie.
+      Un utente che apre l’applicazione per la prima volta può seguire i passaggi
+      seguenti per comprendere rapidamente il funzionamento generale e ottenere
+      una prima approssimazione corretta.
     </p>
 
-    <ul>
-      <li><strong>Enable Heatmap:</strong> attiva/disattiva la visualizzazione</li>
-      <li><strong>Max Error Range:</strong> scala di normalizzazione dei colori</li>
-    </ul>
+    <ol>
+      <li>Avviare l’applet e osservare la schermata iniziale.</li>
+
+      <li>
+        Identificare i tre elementi principali:
+        pannello dei controlli a sinistra, riquadro dei comandi in alto a destra
+        e legenda della heatmap in basso a destra.
+      </li>
+
+      <li>
+        Muovere la telecamera usando W, A, S, D, Q, E, mouse e rotellina per
+        esplorare la scena.
+      </li>
+
+      <li>
+        Premere <strong>C</strong> per liberare il mouse e interagire con
+        l’interfaccia.
+      </li>
+
+      <li>
+        Scegliere il tipo di superficie di riferimento.
+      </li>
+
+      <li>
+        Regolare i parametri della superficie.
+      </li>
+
+      <li>
+        Impostare i parametri della griglia di Coons.
+      </li>
+
+      <li>
+        Premere <strong>Generate Approximation</strong> per generare
+        l’approssimazione.
+      </li>
+
+      <li>
+        Usare le opzioni di visualizzazione per confrontare la superficie
+        approssimata con quella di riferimento.
+      </li>
+
+      <li>
+        Attivare la heatmap e osservare i valori numerici dell’errore, se
+        necessario.
+      </li>
+
+      <li>
+        Premere nuovamente <strong>C</strong> per tornare al controllo della
+        telecamera ed esplorare la scena.
+      </li>
+    </ol>
 
     <p>
-      Codifica cromatica:
+      Questa sequenza rappresenta un flusso di utilizzo tipico e permette di
+      comprendere rapidamente tutte le funzionalità principali dell’applicazione.
     </p>
-
-    <ul>
-      <li>Blu → errore basso</li>
-      <li>Verde → errore moderato</li>
-      <li>Giallo → errore elevato</li>
-      <li>Rosso → errore molto elevato</li>
-    </ul>
-
-    <p>
-      Le regioni con maggiore curvatura tendono a mostrare errori più elevati.
-    </p>
-
-    <img src="assets/img/heatmap.png" alt="Heatmap errore" class="manual-img"/>
   </section>
 
   <!-- ========================================= -->
-  <!-- OFFSET -->
-  <!-- ========================================= -->
 
   <section class="card">
-    <h2>Offset verticale</h2>
-
     <p>
-      La superficie approssimata può essere traslata verticalmente
-      per facilitarne la visualizzazione.
-    </p>
-
-    <ul>
-      <li><strong>Vertical Offset:</strong> separazione tra superficie reale e approssimata</li>
-    </ul>
-
-    <p>
-      Questo parametro non influisce sull’errore, ma migliora la leggibilità
-      evitando sovrapposizioni visive.
-    </p>
-
-    <img src="assets/img/offset.png" alt="Offset verticale" class="manual-img"/>
-  </section>
-
-  <!-- ========================================= -->
-
-  <section class="card">
-    <p class="muted">
       Per una dimostrazione pratica, visita l’
       <a href="applet.html">Applet</a>.
     </p>
@@ -253,10 +603,11 @@
 
   <footer class="footer">
     <p>
-      © 2026 Zotea Dumitru — Computational Geometry, University of Milan
+      © 2026 Zotea Dumitru — Geometria Computazionale, Università di Milano
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity" rel="noopener noreferrer"
+         target="_blank">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>

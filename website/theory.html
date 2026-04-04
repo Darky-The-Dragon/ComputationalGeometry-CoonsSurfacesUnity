@@ -24,7 +24,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-title">[Titolo Progetto]</span>
+      <span class="brand-title">Approssimazione di Superfici mediante Patch di Coons</span>
       <span class="brand-sub">Computational Geometry — a.a. 2025/2026</span>
     </div>
 
@@ -41,7 +41,8 @@
         <a href="theory_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
+      <a class="github-link" href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity"
+         rel="noopener noreferrer" target="_blank">
         GitHub
       </a>
     </div>
@@ -61,7 +62,8 @@
     <section>
       <h2>1. Impostazione del problema</h2>
       <p>
-        Si consideri una superficie rappresentata come grafico di una funzione scalare definita su un dominio rettangolare del piano.
+        Si consideri una superficie rappresentata come grafico di una funzione scalare definita su un dominio
+        rettangolare del piano.
         Più precisamente, sia
       </p>
       <p>
@@ -79,15 +81,20 @@
         \]
       </p>
       <p>
-        Nell’applicazione, tale superficie viene assunta come dato iniziale e può essere ottenuta sia mediante una funzione analitica regolare,
+        Nell’applicazione, tale superficie viene assunta come dato iniziale e può essere ottenuta sia mediante una
+        funzione analitica regolare,
         sia mediante funzioni di rumore di tipo Perlin, eventualmente combinate su più scale.
         In entrambi i casi, la superficie di riferimento costituisce il modello continuo che si intende approssimare.
       </p>
       <p>
-        Il problema studiato consiste nel costruire una superficie approssimante \(\widehat{\Sigma}\), definita a tratti,
-        ottenuta suddividendo il dominio in una griglia rettangolare e associando a ciascuna cella una patch di Coons bilineare.
-        L’interesse teorico della costruzione sta nel mettere in relazione tre aspetti distinti ma strettamente connessi:
-        la struttura locale dei dati di bordo, la qualità globale dell’approssimazione e la continuità della superficie risultante.
+        Il problema studiato consiste nel costruire una superficie approssimante \(\widehat{\Sigma}\), definita a
+        tratti,
+        ottenuta suddividendo il dominio in una griglia rettangolare e associando a ciascuna cella una patch di Coons
+        bilineare.
+        L’interesse teorico della costruzione sta nel mettere in relazione tre aspetti distinti ma strettamente
+        connessi:
+        la struttura locale dei dati di bordo, la qualità globale dell’approssimazione e la continuità della superficie
+        risultante.
       </p>
     </section>
 
@@ -135,7 +142,8 @@
         con \(i = 0,\dots,N_x-1\) e \(j = 0,\dots,N_z-1\).
       </p>
       <p>
-        La discretizzazione del dominio consente di sostituire un problema globale, definito su tutto il rettangolo \(D\),
+        La discretizzazione del dominio consente di sostituire un problema globale, definito su tutto il rettangolo
+        \(D\),
         con una famiglia di problemi locali, ciascuno definito su una singola cella.
         L’approssimazione complessiva nasce quindi dall’assemblaggio delle soluzioni locali.
       </p>
@@ -155,7 +163,8 @@
       </p>
       <p>
         In questo modo ogni cella viene ricondotta allo stesso dominio parametrico standard,
-        e la costruzione della patch può essere descritta in forma uniforme, indipendentemente dalla posizione della cella nel dominio complessivo.
+        e la costruzione della patch può essere descritta in forma uniforme, indipendentemente dalla posizione della
+        cella nel dominio complessivo.
       </p>
     </section>
 
@@ -163,7 +172,8 @@
       <h2>4. Dati di bordo</h2>
       <p>
         Per costruire una patch di Coons su una cella \(D_{ij}\), si considerano le quattro curve di bordo
-        ottenute restringendo la superficie di riferimento ai lati del rettangolo. Esse sono le curve parametrizzate definite da
+        ottenute restringendo la superficie di riferimento ai lati del rettangolo. Esse sono le curve parametrizzate
+        definite da
       </p>
       <p>
         \[
@@ -251,9 +261,11 @@
         dove \(B(u,v)\) è il termine bilineare di correzione.
       </p>
       <p>
-        Questa formula si interpreta come somma di due interpolazioni lineari: una ottenuta interpolando i bordi orizzontali lungo la direzione \(v\),
+        Questa formula si interpreta come somma di due interpolazioni lineari: una ottenuta interpolando i bordi
+        orizzontali lungo la direzione \(v\),
         l’altra ottenuta interpolando i bordi verticali lungo la direzione \(u\).
-        Poiché tale somma conta due volte i contributi ai vertici, è necessario sottrarre un opportuno termine correttivo.
+        Poiché tale somma conta due volte i contributi ai vertici, è necessario sottrarre un opportuno termine
+        correttivo.
       </p>
     </section>
 
@@ -299,12 +311,15 @@
       </p>
       <p>
         Ne segue che la patch ricostruisce esattamente le quattro curve di bordo da cui è stata definita.
-        Questa proprietà è il motivo per cui le patch di Coons costituiscono uno strumento naturale nella modellazione geometrica:
-        esse permettono di determinare l’interno di una superficie a partire dalla sola informazione disponibile sul contorno.
+        Questa proprietà è il motivo per cui le patch di Coons costituiscono uno strumento naturale nella modellazione
+        geometrica:
+        esse permettono di determinare l’interno di una superficie a partire dalla sola informazione disponibile sul
+        contorno.
       </p>
       <p>
         Tuttavia, tale esattezza riguarda esclusivamente il bordo.
-        Nulla garantisce, in generale, che l’interno della patch coincida con la restrizione della superficie originaria alla stessa cella.
+        Nulla garantisce, in generale, che l’interno della patch coincida con la restrizione della superficie originaria
+        alla stessa cella.
       </p>
     </section>
 
@@ -313,7 +328,8 @@
       <p>
         L’approssimazione complessiva della superficie di riferimento è ottenuta associando a ogni cella \(D_{ij}\)
         la corrispondente patch di Coons \(P_{ij}(u,v)\).
-        Si definisce quindi una superficie a tratti \(\widehat{\Sigma}\) la cui espressione locale, su ciascuna cella, è data da
+        Si definisce quindi una superficie a tratti \(\widehat{\Sigma}\) la cui espressione locale, su ciascuna cella, è
+        data da
       </p>
       <p>
         \[
@@ -337,12 +353,14 @@
     <section>
       <h2>9. Continuità della superficie costruita</h2>
       <p>
-        Poiché due patch adiacenti condividono lo stesso bordo geometrico, la superficie risultante è continua in posizione.
-        In termini analitici, essa è almeno \(C^0\). Non compaiono quindi salti di quota o discontinuità spaziali tra una cella e la successiva.
+        Poiché due patch adiacenti condividono lo stesso bordo geometrico, la superficie risultante è continua.
+        In termini analitici, essa è almeno \(C^0\). Non compaiono quindi salti di quota o discontinuità spaziali tra
+        una cella e la successiva.
       </p>
       <p>
         La continuità delle derivate prime, invece, non è garantita in generale.
-        Le derivate parziali lungo i lati condivisi possono infatti dipendere dalla struttura interna delle due patch confinanti e non coincidere.
+        Le derivate parziali lungo i lati condivisi possono infatti dipendere dalla struttura interna delle due patch
+        confinanti e non coincidere.
         La superficie globale non è dunque, in generale, \(C^1\).
       </p>
       <p>
@@ -361,8 +379,10 @@
         All’interno della cella, invece, la ricostruzione avviene unicamente mediante blending dei dati di bordo.
       </p>
       <p>
-        Ne segue che, salvo casi particolari, l’interno della patch non coincide esattamente con la restrizione della superficie originaria.
-        Il metodo utilizza infatti una quantità limitata di informazione: conosce il comportamento della superficie sui lati,
+        Ne segue che, salvo casi particolari, l’interno della patch non coincide esattamente con la restrizione della
+        superficie originaria.
+        Il metodo utilizza infatti una quantità limitata di informazione: conosce il comportamento della superficie sui
+        lati,
         ma non possiede un’informazione indipendente sull’interno.
       </p>
     </section>
@@ -371,11 +391,13 @@
       <h2>11. Casi di esattezza</h2>
       <p>
         Esistono situazioni in cui la ricostruzione mediante patch di Coons risulta esatta.
-        In particolare, se la superficie di riferimento, ristretta a una data cella, è compatibile con la forma bilineare determinata dai suoi bordi,
+        In particolare, se la superficie di riferimento, ristretta a una data cella, è compatibile con la forma
+        bilineare determinata dai suoi bordi,
         allora la patch coincide con essa in ogni punto della cella.
       </p>
       <p>
-        Più in generale, se il grafico della funzione è localmente affine, oppure se la dipendenza interna è interamente determinata
+        Più in generale, se il grafico della funzione è localmente affine, oppure se la dipendenza interna è interamente
+        determinata
         dai dati di bordo secondo il modello bilineare, non compare alcun errore di approssimazione.
         Nei casi non lineari, invece, la differenza tra la superficie reale e quella ricostruita tende a crescere
         al crescere della curvatura e della complessità locale.
@@ -385,7 +407,8 @@
     <section>
       <h2>12. Errore puntuale di approssimazione</h2>
       <p>
-        Indicata con \(f(x,z)\) la quota della superficie di riferimento e con \(\widehat{f}(x,z)\) la quota della superficie approssimata,
+        Indicata con \(f(x,z)\) la quota della superficie di riferimento e con \(\widehat{f}(x,z)\) la quota della
+        superficie approssimata,
         si definisce l’errore puntuale come
       </p>
       <p>
@@ -404,7 +427,8 @@
       <h2>13. Misure globali dell’errore</h2>
       <p>
         Per ottenere una valutazione sintetica della qualità dell’approssimazione,
-        l’errore viene campionato su un insieme finito di punti del dominio e riassunto mediante alcune quantità globali.
+        l’errore viene campionato su un insieme finito di punti del dominio e riassunto mediante alcune quantità
+        globali.
       </p>
       <p>
         L’errore medio è definito da
@@ -441,7 +465,8 @@
       </p>
       <p>
         A differenza dell’errore medio assoluto, l’RMSE attribuisce maggior peso agli errori grandi,
-        e risulta quindi particolarmente utile quando si vogliono evidenziare regioni in cui l’approssimazione fallisce in modo più marcato.
+        e risulta quindi particolarmente utile quando si vogliono evidenziare regioni in cui l’approssimazione fallisce
+        in modo più marcato.
       </p>
     </section>
 
@@ -456,7 +481,8 @@
       <p>
         Dal punto di vista intuitivo, una superficie sufficientemente regolare, osservata su scale sempre più piccole,
         appare progressivamente più semplice.
-        Di conseguenza, una ricostruzione locale basata sui soli bordi tende a migliorare al raffinarsi della discretizzazione.
+        Di conseguenza, una ricostruzione locale basata sui soli bordi tende a migliorare al raffinarsi della
+        discretizzazione.
       </p>
     </section>
 
@@ -489,53 +515,66 @@
     <section>
       <h2>17. Interpretazione della mappa di errore</h2>
       <p>
-        L’applicazione associa all’errore puntuale una codifica cromatica, ottenendo una heatmap definita sul dominio della superficie approssimata.
+        L’applicazione associa all’errore puntuale una codifica cromatica, ottenendo una heatmap definita sul dominio
+        della superficie approssimata.
         Tale rappresentazione non introduce nuovi contenuti matematici, ma svolge una funzione analitica importante:
         rende immediatamente visibile la distribuzione spaziale dell’errore.
       </p>
       <p>
-        Le regioni quasi planari o a bassa curvatura tendono a essere approssimate meglio e corrispondono dunque a valori bassi dell’errore;
-        viceversa, zone con forti variazioni di pendenza, creste, avvallamenti o dettagli rumorosi mostrano valori più alti.
+        Le regioni quasi planari o a bassa curvatura tendono a essere approssimate meglio e corrispondono dunque a
+        valori bassi dell’errore;
+        viceversa, zone con forti variazioni di pendenza, creste, avvallamenti o dettagli rumorosi mostrano valori più
+        alti.
       </p>
     </section>
 
     <section>
       <h2>18. Significato teorico complessivo</h2>
       <p>
-        Nel suo insieme, il problema studiato costituisce un esempio elementare ma significativo di approssimazione geometrica locale.
+        Nel suo insieme, il problema studiato costituisce un esempio elementare ma significativo di approssimazione
+        geometrica locale.
         Le patch di Coons permettono di ricostruire una superficie a partire da informazioni di bordo,
-        e proprio per questo mostrano con chiarezza i limiti e i punti di forza di un approccio di interpolazione locale.
+        e proprio per questo mostrano con chiarezza i limiti e i punti di forza di un approccio di interpolazione
+        locale.
       </p>
       <p>
         Da un lato, il metodo garantisce una costruzione semplice, geometricamente coerente e continua in posizione;
-        dall’altro, esso non assicura in generale né l’esattezza dell’interno né la continuità delle derivate prime tra patch adiacenti.
-        La superficie risultante è quindi una buona approssimazione piecewise, ma non una superficie liscia nel senso forte del termine.
+        dall’altro, esso non assicura in generale né l’esattezza dell’interno né la continuità delle derivate prime tra
+        patch adiacenti.
+        La superficie risultante è quindi una buona approssimazione piecewise, ma non una superficie liscia nel senso
+        forte del termine.
       </p>
     </section>
 
     <section>
       <h2>19. Conclusione</h2>
       <p>
-        La costruzione mediante patch di Coons bilineari fornisce una procedura naturale per approssimare una superficie definita su un dominio rettangolare.
-        Il metodo si basa su una suddivisione del dominio in celle, sull’estrazione delle curve di bordo da ciascuna cella
+        La costruzione mediante patch di Coons bilineari fornisce una procedura naturale per approssimare una superficie
+        definita su un dominio rettangolare.
+        Il metodo si basa su una suddivisione del dominio in celle, sull’estrazione delle curve di bordo da ciascuna
+        cella
         e sulla ricostruzione dell’interno mediante blending parametrico.
-        La superficie globale è ottenuta come unione di patch locali, continue tra loro in posizione ma non necessariamente nelle derivate.
+        La superficie globale è ottenuta come unione di patch locali, continue tra loro in posizione ma non
+        necessariamente nelle derivate.
       </p>
       <p>
         L’errore di approssimazione nasce dal fatto che l’interno di ciascuna patch è determinato unicamente dai bordi
         e non da una conoscenza completa della superficie originaria.
-        Il raffinamento della griglia tende a ridurre tale errore, mentre l’aumento della complessità della superficie lo accentua.
-        L’analisi numerica e visiva dell’errore permette quindi di studiare in modo rigoroso l’efficacia del metodo e i suoi limiti.
+        Il raffinamento della griglia tende a ridurre tale errore, mentre l’aumento della complessità della superficie
+        lo accentua.
+        L’analisi numerica e visiva dell’errore permette quindi di studiare in modo rigoroso l’efficacia del metodo e i
+        suoi limiti.
       </p>
     </section>
   </article>
 
   <footer class="footer">
     <p>
-      © 2026 Zotea Dumitru — Computational Geometry, University of Milan
+      © 2026 Zotea Dumitru — Geometria Computazionale, Università di Milano
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity" rel="noopener noreferrer"
+         target="_blank">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>

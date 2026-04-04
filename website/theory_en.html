@@ -24,7 +24,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-title">[Project Title]</span>
+      <span class="brand-title">Surface Approximation using Coons Patches</span>
       <span class="brand-sub">Computational Geometry — AY 2025/2026</span>
     </div>
 
@@ -41,7 +41,8 @@
         <a class="active" href="theory_en.html">EN</a>
       </div>
 
-      <a class="github-link" href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">
+      <a class="github-link" href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity"
+         rel="noopener noreferrer" target="_blank">
         GitHub
       </a>
     </div>
@@ -79,15 +80,18 @@
         \]
       </p>
       <p>
-        In the application, this surface is taken as the initial datum and may be generated either by means of a regular analytic function,
+        In the application, this surface is taken as the initial datum and may be generated either by means of a regular
+        analytic function,
         or by Perlin-noise-based functions, possibly combined across multiple scales.
         In both cases, the reference surface constitutes the continuous model to be approximated.
       </p>
       <p>
-        The problem under study consists in constructing an approximating surface \(\widehat{\Sigma}\), defined piecewise,
+        The problem under study consists in constructing an approximating surface \(\widehat{\Sigma}\), defined
+        piecewise,
         obtained by subdividing the domain into a rectangular grid and assigning to each cell a bilinear Coons patch.
         The theoretical interest of this construction lies in relating three distinct but closely connected aspects:
-        the local structure of the boundary data, the global quality of the approximation, and the continuity of the resulting surface.
+        the local structure of the boundary data, the global quality of the approximation, and the continuity of the
+        resulting surface.
       </p>
     </section>
 
@@ -135,7 +139,8 @@
         with \(i = 0,\dots,N_x-1\) and \(j = 0,\dots,N_z-1\).
       </p>
       <p>
-        The discretization of the domain makes it possible to replace a global problem, defined over the whole rectangle \(D\),
+        The discretization of the domain makes it possible to replace a global problem, defined over the whole rectangle
+        \(D\),
         with a family of local problems, each defined on a single cell.
         The overall approximation is therefore obtained by assembling the local solutions.
       </p>
@@ -155,7 +160,8 @@
       </p>
       <p>
         In this way, every cell is mapped to the same standard parametric domain,
-        and the construction of the patch can be expressed in a uniform form, independently of the position of the cell in the global domain.
+        and the construction of the patch can be expressed in a uniform form, independently of the position of the cell
+        in the global domain.
       </p>
     </section>
 
@@ -305,7 +311,8 @@
       </p>
       <p>
         However, this exactness only concerns the boundary.
-        In general, nothing guarantees that the interior of the patch coincides with the restriction of the original surface to the same cell.
+        In general, nothing guarantees that the interior of the patch coincides with the restriction of the original
+        surface to the same cell.
       </p>
     </section>
 
@@ -330,7 +337,8 @@
         \]
       </p>
       <p>
-        The construction is therefore piecewise: each patch depends only on its own cell and on the corresponding boundary data,
+        The construction is therefore piecewise: each patch depends only on its own cell and on the corresponding
+        boundary data,
         while the union of all patches yields a surface defined over the whole domain.
       </p>
     </section>
@@ -338,12 +346,14 @@
     <section>
       <h2>9. Continuity of the constructed surface</h2>
       <p>
-        Since two adjacent patches share the same geometric boundary, the resulting surface is continuous in position.
-        In analytic terms, it is at least \(C^0\). Therefore, no jumps in height or spatial discontinuities arise between one cell and the next.
+        Since two adjacent patches share the same geometric boundary, the resulting surface is continuous.
+        In analytic terms, it is at least \(C^0\). Therefore, no jumps in height or spatial discontinuities arise
+        between one cell and the next.
       </p>
       <p>
         Continuity of first derivatives, on the other hand, is not guaranteed in general.
-        The partial derivatives along shared edges may depend on the internal structure of the two neighboring patches and may fail to coincide.
+        The partial derivatives along shared edges may depend on the internal structure of the two neighboring patches
+        and may fail to coincide.
         The global surface is therefore not, in general, \(C^1\).
       </p>
       <p>
@@ -362,7 +372,8 @@
         Inside the cell, by contrast, reconstruction is carried out solely through blending of the boundary data.
       </p>
       <p>
-        It follows that, except in special cases, the interior of the patch does not coincide exactly with the restriction of the original surface.
+        It follows that, except in special cases, the interior of the patch does not coincide exactly with the
+        restriction of the original surface.
         The method uses only a limited amount of information: it knows the behavior of the surface along the edges,
         but it has no independent information about the interior.
       </p>
@@ -372,7 +383,8 @@
       <h2>11. Cases of exact reconstruction</h2>
       <p>
         There are situations in which reconstruction by means of Coons patches is exact.
-        In particular, if the reference surface, restricted to a given cell, is compatible with the bilinear form determined by its boundaries,
+        In particular, if the reference surface, restricted to a given cell, is compatible with the bilinear form
+        determined by its boundaries,
         then the patch coincides with it at every point of the cell.
       </p>
       <p>
@@ -387,7 +399,8 @@
     <section>
       <h2>12. Pointwise approximation error</h2>
       <p>
-        Denoting by \(f(x,z)\) the height of the reference surface and by \(\widehat{f}(x,z)\) the height of the approximated surface,
+        Denoting by \(f(x,z)\) the height of the reference surface and by \(\widehat{f}(x,z)\) the height of the
+        approximated surface,
         the pointwise error is defined as
       </p>
       <p>
@@ -443,14 +456,16 @@
       </p>
       <p>
         Unlike the mean absolute error, the RMSE assigns greater weight to large errors,
-        and is therefore particularly useful when one wishes to emphasize regions where the approximation fails more markedly.
+        and is therefore particularly useful when one wishes to emphasize regions where the approximation fails more
+        markedly.
       </p>
     </section>
 
     <section>
       <h2>14. Dependence of the error on discretization</h2>
       <p>
-        One of the most significant aspects of the problem concerns the dependence of the error on the fineness of the grid.
+        One of the most significant aspects of the problem concerns the dependence of the error on the fineness of the
+        grid.
         If the numbers of subdivisions \(N_x\) and \(N_z\) increase, the cells become smaller,
         and each Coons patch operates on a reduced portion of the surface.
         Under these conditions, interior reconstruction generally tends to become more accurate.
@@ -458,7 +473,8 @@
       <p>
         From an intuitive point of view, a sufficiently regular surface, when observed at progressively smaller scales,
         appears increasingly simple.
-        Consequently, a local reconstruction based solely on boundary data tends to improve as the discretization is refined.
+        Consequently, a local reconstruction based solely on boundary data tends to improve as the discretization is
+        refined.
       </p>
     </section>
 
@@ -491,12 +507,14 @@
     <section>
       <h2>17. Interpretation of the error map</h2>
       <p>
-        The application associates a color encoding with the pointwise error, thus producing a heatmap defined over the domain of the approximated surface.
+        The application associates a color encoding with the pointwise error, thus producing a heatmap defined over the
+        domain of the approximated surface.
         This representation introduces no new mathematical content, but serves an important analytical purpose:
         it makes the spatial distribution of the error immediately visible.
       </p>
       <p>
-        Nearly planar regions or regions of low curvature tend to be approximated better and therefore correspond to lower error values;
+        Nearly planar regions or regions of low curvature tend to be approximated better and therefore correspond to
+        lower error values;
         conversely, areas with strong slope variations, ridges, valleys, or noisy detail show higher values.
       </p>
     </section>
@@ -504,30 +522,38 @@
     <section>
       <h2>18. Overall theoretical meaning</h2>
       <p>
-        Taken as a whole, the problem under study constitutes an elementary but significant example of local geometric approximation.
+        Taken as a whole, the problem under study constitutes an elementary but significant example of local geometric
+        approximation.
         Coons patches make it possible to reconstruct a surface from boundary information,
-        and for this very reason they clearly reveal both the limitations and the strengths of a local interpolation approach.
+        and for this very reason they clearly reveal both the limitations and the strengths of a local interpolation
+        approach.
       </p>
       <p>
         On the one hand, the method guarantees a simple construction, geometrically coherent and continuous in position;
-        on the other hand, it does not in general ensure either exactness in the interior or continuity of first derivatives between adjacent patches.
-        The resulting surface is therefore a good piecewise approximation, but not a smooth surface in the strong sense of the term.
+        on the other hand, it does not in general ensure either exactness in the interior or continuity of first
+        derivatives between adjacent patches.
+        The resulting surface is therefore a good piecewise approximation, but not a smooth surface in the strong sense
+        of the term.
       </p>
     </section>
 
     <section>
       <h2>19. Conclusion</h2>
       <p>
-        The construction by means of bilinear Coons patches provides a natural procedure for approximating a surface defined over a rectangular domain.
+        The construction by means of bilinear Coons patches provides a natural procedure for approximating a surface
+        defined over a rectangular domain.
         The method is based on subdividing the domain into cells, extracting boundary curves from each cell,
         and reconstructing the interior through parametric blending.
-        The global surface is obtained as the union of local patches, continuous in position but not necessarily in derivatives.
+        The global surface is obtained as the union of local patches, continuous in position but not necessarily in
+        derivatives.
       </p>
       <p>
         Approximation error arises from the fact that the interior of each patch is determined solely by its boundaries
         and not by a complete knowledge of the original surface.
-        Refining the grid tends to reduce this error, whereas increasing the complexity of the surface tends to amplify it.
-        Numerical and visual error analysis therefore make it possible to study rigorously both the effectiveness of the method and its limitations.
+        Refining the grid tends to reduce this error, whereas increasing the complexity of the surface tends to amplify
+        it.
+        Numerical and visual error analysis therefore make it possible to study rigorously both the effectiveness of the
+        method and its limitations.
       </p>
     </section>
   </article>
@@ -537,7 +563,8 @@
       © 2026 Zotea Dumitru — Computational Geometry, University of Milan
     </p>
     <div class="footer-links">
-      <a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Darky-The-Dragon/ComputationalGeometry-CoonsSurfacesUnity" rel="noopener noreferrer"
+         target="_blank">GitHub</a>
       <a href="license.html">License</a>
     </div>
   </footer>
